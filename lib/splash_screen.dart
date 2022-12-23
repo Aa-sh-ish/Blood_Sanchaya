@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
       showLoader: true,
       durationInSeconds: 2,
 
-       navigator: LoginPage(),
+       navigator: HomePage(),
 
       )
 
