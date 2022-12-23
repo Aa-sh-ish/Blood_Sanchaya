@@ -16,31 +16,66 @@ class _BB_detailsState extends State<BB_details> {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [Color(0xffEA5959), Color(0xffF5F5F5)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
         ),
       ),
       child: SafeArea(
         child: Scaffold(
           backgroundColor: Color(0x000000),
-          body: Padding(
-            padding: const EdgeInsets.only(top: 30),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(24)),
-                    height: screenHeight * 0.2,
+          body: Column(
+            children: [
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(24)),
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(top: 10, left: 20, bottom: 10),
                     child: Column(
-                      children: [Text("dsfsfd")],
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Blood Bank XYZ",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text("Bharatpur-11,Chitwan"),
+                        Text("Bharatpur Hospital"),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.call,
+                              color: Color(0xffFE0011),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Text("01-111111"),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.mail,
+                              color: Color(0xffFE0011),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Text("xyz@gmail.com"),
+                          ],
+                        )
+                      ],
                     ),
                   ),
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
         ),
       ),

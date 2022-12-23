@@ -1,4 +1,5 @@
 import 'package:blood_sanchaya/signin.dart';
+import 'package:blood_sanchaya/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +17,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Sign_In(),
+      home: SplashScreen(),
       debugShowCheckedModeBanner: false,
       title: "Blood Sanchaya",
     );

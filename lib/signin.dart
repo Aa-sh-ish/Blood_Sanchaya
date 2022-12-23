@@ -29,8 +29,8 @@ class _Sign_InState extends State<Sign_In> {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [Color(0xffEA5959), Color(0xffF5F5F5)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
         ),
       ),
       child: SafeArea(
@@ -65,14 +65,14 @@ class _Sign_InState extends State<Sign_In> {
                         ]),
                   ),
                   SizedBox(
-                    height: screenHeight * 0.02,
+                    height: screenHeight * 0.03,
                   ),
                   Text(
                     "Create Your Account",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
-                    height: screenHeight * 0.03,
+                    height: screenHeight * 0.02,
                   ),
                   All_Button(
                     hint_text: "Enter Your Mail",
@@ -126,7 +126,7 @@ class _Sign_InState extends State<Sign_In> {
                           dropdownDecoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(14),
                             border: Border.all(
-                              color: Color(0xffFE0011),
+                              color: Color(0xfff70010),
                             ),
                           ),
                           onChanged: ((value) {
@@ -150,7 +150,7 @@ class _Sign_InState extends State<Sign_In> {
                           dropdownDecoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(14),
                             border: Border.all(
-                              color: Color(0xffFE0011),
+                              color: Color(0xfff70010),
                             ),
                           ),
                           onChanged: ((value) {
@@ -162,16 +162,10 @@ class _Sign_InState extends State<Sign_In> {
                       ],
                     ),
                   ),
-                  SizedBox(
-                    height: screenHeight * 0.02,
-                  ),
+                  // SizedBox(
+                  //   height: screenHeight * 0.02,
+                  // ),
                   GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => BB_details()),
-                      );
-                    },
                     child: Image.asset(
                       "assets/SignIn Button.png",
                       width: screenHeight * 0.2,
@@ -181,13 +175,17 @@ class _Sign_InState extends State<Sign_In> {
                     height: screenHeight * 0.02,
                   ),
                   GestureDetector(
-                      child: Text(
-                    "Already Have An Account",
-                    style: TextStyle(
-                        color: Color(0xfff70010),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16),
-                  )),
+                    onTap: (() {
+                      Navigator.pop(context);
+                    }),
+                    child: Text(
+                      "Already Have An Account",
+                      style: TextStyle(
+                          color: Color(0xfff70010),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -226,17 +224,17 @@ class _All_ButtonState extends State<All_Button> {
           hintText: widget.hint_text,
           prefixIcon: Icon(
             widget.prefix_icon,
-            color: Colors.white,
+            color: Colors.black45,
           ),
-          suffixIcon: GestureDetector(
+          suffix: InkWell(
             onTap: () {
               setState(() {
                 widget.obsecure = !widget.obsecure;
               });
             },
             child: Icon(
-              widget.obsecure ? Icons.visibility_off : widget.suffix_icon,
-              color: Colors.white,
+              widget.obsecure ? Icons.visibility : Icons.visibility_off,
+              color: Colors.black45,
             ),
           ),
           enabledBorder: OutlineInputBorder(
