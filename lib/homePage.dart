@@ -1,3 +1,4 @@
+import 'package:blood_sanchaya/google_map.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -37,24 +38,19 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   UserAccountsDrawerHeader(
                     decoration: BoxDecoration(color: Color(0xffEA5959)),
-
                     accountName: Text(
-                      "user name  namen namen anmaen",
+                      "User name",
                       style: TextStyle(color: Colors.black45),
                     ),
-                    accountEmail: Text("user email",
+                    accountEmail: Text("User email",
                         style: TextStyle(color: Colors.black45)),
                     currentAccountPicture: Container(
-
                       decoration: BoxDecoration(
-
                           shape: BoxShape.circle,
                           image: DecorationImage(
                               fit: BoxFit.fill,
-                              image:AssetImage("assets/Logo.png"))),
+                              image: AssetImage("assets/Logo.png"))),
                     ),
-
-
                   ),
                   ListTile(
                     leading: Icon(Icons.update),
@@ -92,12 +88,16 @@ class _HomePageState extends State<HomePage> {
                     onTap: () {},
                   ),
                   ListTile(
-                    leading: Icon(Icons.login,color: Colors.black45,),
-                    title: Text("Login As Blood Bank",style: TextStyle(color:  Color(0xffEA5959)),),
+                    leading: Icon(
+                      Icons.login,
+                      color: Colors.black45,
+                    ),
+                    title: Text(
+                      "Login As Blood Bank",
+                      style: TextStyle(color: Color(0xffEA5959)),
+                    ),
                     onTap: () {},
                   ),
-
-
                 ],
               ),
             ),
@@ -139,7 +139,16 @@ class _HomePageState extends State<HomePage> {
                             },
                           );
                         },
+                      ),
+                      ElevatedButton(onPressed: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) =>  Google_map()),
+                        );
+                      },
+                          child:Image.asset("assets/map.png")
                       )
+
                     ],
                   ),
                 )
