@@ -1,9 +1,15 @@
 import 'package:blood_sanchaya/HomePage.dart';
+import 'package:blood_sanchaya/aboutUs.dart';
 import 'package:blood_sanchaya/signin.dart';
 import 'package:blood_sanchaya/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:khalti/khalti.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Khalti.init(
+      publicKey: "test_public_key_b12db301175d4e078e9b2fecf6b56a7e",
+      enabledDebugging: false);
   runApp(const MyApp());
 }
 

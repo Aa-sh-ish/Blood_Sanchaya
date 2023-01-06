@@ -1,4 +1,5 @@
 import 'package:blood_sanchaya/Events.dart';
+import 'package:blood_sanchaya/Support.dart';
 import 'package:blood_sanchaya/blood_bank_detail.dart';
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -112,7 +113,12 @@ class _HomePageState extends State<HomePage> {
               ListTile(
                 leading: Icon(Icons.handshake_outlined),
                 title: Text("Support Us"),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SupportUs()),
+                  );
+                },
               ),
               ListTile(
                 leading: Icon(Icons.details_outlined),
