@@ -43,6 +43,8 @@ dependencies:
   awesome_snackbar_content: ^0.0.8
   http: ^0.13.4
   flutter_google_places: ^0.3.0
+  flutter_local_notifications: ^13.0.0
+  flutter_polyline_points: ^1.0.0
 
 dev_dependencies:
   flutter_test:
