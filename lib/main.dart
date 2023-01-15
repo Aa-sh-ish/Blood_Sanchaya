@@ -1,5 +1,6 @@
 import 'dart:html';
 
+import 'package:blood_sanchaya/About_Blood_Sanchaya.dart';
 import 'package:blood_sanchaya/About_Us.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return  MaterialApp(
       title:"Blood Sanchaya",
-      home: About_us(),
+      home: About_Us(),
       debugShowCheckedModeBanner: false,
     );
   }

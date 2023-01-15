@@ -45,7 +45,7 @@ class _EventState extends State<Event> {
 
       ),
 
-        Image.asset('Images/Rectangle 2.png')
+        Image.asset('assets/Rectangle 2.png')
 
       ],
     ),

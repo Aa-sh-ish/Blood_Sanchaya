@@ -1,50 +1,131 @@
 import 'package:flutter/material.dart';
-class About_us extends StatefulWidget {
-  const About_us({Key? key}) : super(key: key);
+class About_Us extends StatelessWidget {
+  const About_Us({super.key});
 
-  @override
-  State<About_us> createState() => _About_usState();
-}
-
-class _About_usState extends State<About_us> {
   @override
   Widget build(BuildContext context) {
-      var size = MediaQuery.of(context).size;
-      var height = size.height;
-      var width = size.width;
+    var name;
+    var email;
+    var linkedIn;
     return Container(
-        decoration: new BoxDecoration(
-        gradient: new LinearGradient(
-        colors: [
-        Color(0xffF70010),
-    Colors.white,
-    ],
-    begin: FractionalOffset.topCenter,
-    end: FractionalOffset.bottomCenter,
-    )
-    ),
-    child: Scaffold(
-
-    backgroundColor: Colors.transparent,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text("About Us",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24),
-
-            ),
-            SizedBox(
-              height:height*0.01,
-
-            ),
-            Text("Blood Sanchaya is full service mobile application created with the motive of easy supply of blood over Nepal."),
-
-          ],
-
+      height: double.maxFinite,
+      decoration: new BoxDecoration(
+          gradient: new LinearGradient(
+            colors: [
+              Color(0xffEA5959),
+              Color(0xffF5F5F5),
+            ],
+            begin: FractionalOffset.topRight,
+            end: FractionalOffset.bottomLeft,
+          )
       ),
+      child: SafeArea(child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.red[300],
+          leading: Image.asset("assets/blood.png"),
+          title: Text("Donate Blood Save Life",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          centerTitle: true,
+        ),
+        backgroundColor: Colors.transparent,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child: Container(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Text("About Us",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+            SizedBox(
+              height: 40,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children:[
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children:[
+            contain(name: "Aashish Lamsal", email: "aashish33lamsal@gmail.com ", linkedIn: "Aashish Lamshal", image:"assets/aas.jpg",
+                   ),
+                SizedBox(
+                  height: 20,
+                ),
+                contain(name: "Isha Adhikari", email: "ishuadhikari398@gmail.com", linkedIn: "Isha Adhikari", image:"assets/ish.jpg",
+                ),
+                SizedBox(
+                  height: 20,
+                ),
 
-    )
+            ],),
+                SizedBox(
+                  height: 40,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children:[
+                    contain(name: "Pragati Baniya", email: "pragatibaniya62@gmail.com", linkedIn: "Pragati Baniya", image:"assets/pp.jpg",
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    contain(name: "Santosh Mishra", email: "santoshmishra6663@gmail.com", linkedIn: "Santosh Mishra", image:"assets/sante.jpg",
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                  ],),
+                SizedBox(
+                  height: 40,
+                ),
+              ],),
+
+              ],
+            ),
+          ),
+        ),
+      ),
+      ),
     );
   }
 }
 
+class contain extends StatefulWidget{
+  var linkedIn;
+  var name;
+  var email;
+  var image;
+
+  contain({required this.name,required this.email,required this.linkedIn,required this.image}) ;
+
+  @override
+  State<contain> createState() => _containState();
+}
+
+class _containState extends State<contain> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+
+
+      child: Container(
+
+        child: Column(
+          children: [
+            Image.asset( "${widget.image}", height: 60,width: 60,),
+            Text("${widget.name}"),
+            Text("${widget.email}"),
+            Text("${widget.linkedIn}"),
+
+          ]
+        ),
+      ));}}
