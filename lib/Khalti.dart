@@ -29,7 +29,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                 SizedBox(
                   height: screenHeight * 0.02,
                 ),
-                Khalti_Button(
+                Khalti_Id_Button(
                   hint_text: "Enter Phone Number",
                   prefix_icon: Icons.phone,
                   obsecure: false,
@@ -38,7 +38,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                 SizedBox(
                   height: screenHeight * 0.02,
                 ),
-                Khalti_Button(
+                Khalti_Pass_Button(
                     controller: pin_controller,
                     hint_text: "Enter MPIN",
                     prefix_icon: Icons.lock,
@@ -135,8 +135,8 @@ class _PaymentMethodState extends State<PaymentMethod> {
   }
 }
 
-class Khalti_Button extends StatefulWidget {
-  Khalti_Button(
+class Khalti_Pass_Button extends StatefulWidget {
+  Khalti_Pass_Button(
       {required this.hint_text,
       required this.prefix_icon,
       required this.controller,
@@ -149,10 +149,10 @@ class Khalti_Button extends StatefulWidget {
   var obsecure;
   var controller;
   @override
-  State<Khalti_Button> createState() => _Khalti_ButtonState();
+  State<Khalti_Pass_Button> createState() => _Khalti_Pass_ButtonState();
 }
 
-class _Khalti_ButtonState extends State<Khalti_Button> {
+class _Khalti_Pass_ButtonState extends State<Khalti_Pass_Button> {
   @override
   Widget build(BuildContext context) {
     return TextField(
@@ -173,9 +173,57 @@ class _Khalti_ButtonState extends State<Khalti_Button> {
             });
           },
           child: Icon(
-            widget.obsecure ? widget.suffix_icon : Icons.visibility_off,
+            widget.obsecure ? Icons.visibility : Icons.visibility_off,
             color: Colors.black45,
           ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(24),
+          borderSide: BorderSide(
+            color: Color(0xff59226A),
+            width: 2,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(24),
+          borderSide: BorderSide(
+            color: Color(0xff59226A),
+            width: 2,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class Khalti_Id_Button extends StatefulWidget {
+  Khalti_Id_Button(
+      {required this.hint_text,
+      required this.prefix_icon,
+      required this.controller,
+      this.obsecure});
+
+  var hint_text;
+  var prefix_icon;
+  var obsecure;
+  var controller;
+  @override
+  State<Khalti_Id_Button> createState() => _Khalti_Id_ButtonState();
+}
+
+class _Khalti_Id_ButtonState extends State<Khalti_Id_Button> {
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: widget.controller,
+      obscureText: widget.obsecure,
+      decoration: InputDecoration(
+        fillColor: Colors.white70,
+        filled: true,
+        hintText: widget.hint_text,
+        prefixIcon: Icon(
+          widget.prefix_icon,
+          color: Colors.black45,
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(24),

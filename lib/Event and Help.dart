@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// import 'package:phone_caller/phone_caller.dart';
 
 class Event_and_Help extends StatelessWidget {
   const Event_and_Help({super.key});
@@ -50,9 +51,23 @@ class Event_and_Help extends StatelessWidget {
                           "XXXXXXXX from xxxxxxxx municipility, District needs XX  x-pint blood please contact xxxxx in 98xxxxxxxx number ",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Image.asset(
-                          "assets/Cancel.png",
-                          width: screenwidth * 0.3,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Image.asset(
+                              "assets/Cancel.png",
+                              width: screenwidth * 0.3,
+                            ),
+                            GestureDetector(
+                              onTap: () async {
+                                // await PhoneCaller.callNumber("999");
+                              },
+                              child: Image.asset(
+                                "assets/Call.png",
+                                width: screenwidth * 0.3,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),

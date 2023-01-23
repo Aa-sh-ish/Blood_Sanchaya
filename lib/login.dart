@@ -1,3 +1,4 @@
+import 'package:blood_sanchaya/ButtomNavi.dart';
 import 'package:blood_sanchaya/HomePage.dart';
 import 'package:blood_sanchaya/blood_bank_detail.dart';
 import 'package:blood_sanchaya/signin.dart';
@@ -143,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => HomePage()),
+                        MaterialPageRoute(builder: (context) => BottonNav2()),
                       );
                     },
                     child: Image.asset("assets/login in button.png",

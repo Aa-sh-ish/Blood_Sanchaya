@@ -1,6 +1,9 @@
+import 'package:blood_sanchaya/Bank_Login.dart';
 import 'package:blood_sanchaya/Events.dart';
 import 'package:blood_sanchaya/Support.dart';
 import 'package:blood_sanchaya/blood_bank_detail.dart';
+import 'package:blood_sanchaya/date_update.dart';
+import 'package:blood_sanchaya/feedback.dart';
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
@@ -88,7 +91,12 @@ class _HomePageState extends State<HomePage> {
               ListTile(
                 leading: Icon(Icons.update),
                 title: Text("Update Donate Date"),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Date_Update()),
+                  );
+                },
               ),
               ListTile(
                 leading: Icon(Icons.manage_accounts_sharp),
@@ -103,7 +111,12 @@ class _HomePageState extends State<HomePage> {
               ListTile(
                 leading: Icon(Icons.feedback_rounded),
                 title: Text("FeedBack"),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Feed_Back()),
+                  );
+                },
               ),
               ListTile(
                 leading: Icon(Icons.shield),
@@ -139,7 +152,12 @@ class _HomePageState extends State<HomePage> {
                   "Login As Blood Bank",
                   style: TextStyle(color: Color(0xffEA5959)),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Bank_Login()),
+                  );
+                },
               ),
             ],
           ),

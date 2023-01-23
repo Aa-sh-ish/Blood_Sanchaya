@@ -82,7 +82,7 @@ class _Sign_InState extends State<Sign_In> {
                   SizedBox(
                     height: screenHeight * 0.02,
                   ),
-                  All_Button(
+                  Pass_Button(
                     hint_text: "Enter Your Password",
                     prefix_icon: Icons.lock_outline,
                     suffix_icon: Icons.remove_red_eye_outlined,
@@ -91,7 +91,7 @@ class _Sign_InState extends State<Sign_In> {
                   SizedBox(
                     height: screenHeight * 0.02,
                   ),
-                  All_Button(
+                  Pass_Button(
                     hint_text: "Re-enter Your Password ",
                     prefix_icon: Icons.lock_outline,
                     suffix_icon: Icons.remove_red_eye_outlined,
@@ -196,8 +196,8 @@ class _Sign_InState extends State<Sign_In> {
   }
 }
 
-class All_Button extends StatefulWidget {
-  All_Button(
+class Pass_Button extends StatefulWidget {
+  Pass_Button(
       {required this.hint_text,
       required this.prefix_icon,
       this.suffix_icon,
@@ -208,10 +208,10 @@ class All_Button extends StatefulWidget {
   var suffix_icon;
   var obsecure;
   @override
-  State<All_Button> createState() => _All_ButtonState();
+  State<Pass_Button> createState() => _Pass_ButtonState();
 }
 
-class _All_ButtonState extends State<All_Button> {
+class _Pass_ButtonState extends State<Pass_Button> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -236,6 +236,52 @@ class _All_ButtonState extends State<All_Button> {
               widget.obsecure ? Icons.visibility : Icons.visibility_off,
               color: Colors.black45,
             ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(24),
+            borderSide: BorderSide(
+              color: Colors.white70,
+              width: 2,
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(24),
+            borderSide: BorderSide(
+              color: Color(0xffFE0011),
+              width: 2,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class All_Button extends StatefulWidget {
+  All_Button(
+      {required this.hint_text, required this.prefix_icon, this.obsecure});
+
+  var hint_text;
+  var prefix_icon;
+  var obsecure;
+  @override
+  State<All_Button> createState() => _All_ButtonState();
+}
+
+class _All_ButtonState extends State<All_Button> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30),
+      child: TextField(
+        obscureText: widget.obsecure,
+        decoration: InputDecoration(
+          fillColor: Colors.white70,
+          filled: true,
+          hintText: widget.hint_text,
+          prefixIcon: Icon(
+            widget.prefix_icon,
+            color: Colors.black45,
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(24),
