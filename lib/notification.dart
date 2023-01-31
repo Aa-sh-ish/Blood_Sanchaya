@@ -9,11 +9,9 @@ class NotificationApi {
 
   static Future _notificationDetails() async {
     return NotificationDetails(
-      android: AndroidNotificationDetails('channel id', 'channel name',
-          channelDescription: 'Open Details',
-          importance: Importance.max,
-          priority: Priority.max,
-          playSound: true),
+      android: AndroidNotificationDetails(
+          'channel id', 'channel name', 'Channel Details',
+          importance: Importance.max, priority: Priority.max, playSound: true),
     );
   }
 
@@ -23,10 +21,10 @@ class NotificationApi {
 
     await _notifications.initialize(
       settings,
-      onSelectNotification:(payload)async{
-        onNotifications.add(payload)
+      onSelectNotification: (payload) async {
+        onNotifications.add(payload);
       },
-        );
+    );
   }
 
   static Future showNotification({
@@ -48,11 +46,10 @@ class NotificationApi {
   //   print('id $id');
   // }
 
-  Future<void> onSelectNotification(NotificationResponse? response) async {
-    print('payload $response');
-    if (response?.payload != null && response!.payload!.isNotEmpty) {
-      onNotifications.add(response.payload);
-    }
-  }
-
+  // Future<dynamic> onSelectNotification(NotificationResponse? response) async {
+  //   print('payload $response');
+  //   if (response?.payload != null && response!.payload!.isNotEmpty) {
+  //     onNotifications.add(response.payload);
+  //   }
+  // }
 }

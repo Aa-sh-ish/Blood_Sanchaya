@@ -231,28 +231,3 @@ class _HelpState extends State<Help> {
     );
   }
 }
-
-class NormalTextField extends StatelessWidget {
-  NormalTextField(this.hintText, this.icon, this.labelText);
-  var hintText;
-  var icon;
-  // var controller;
-  var labelText;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20, bottom: 20),
-      child: TextField(
-        decoration: InputDecoration(
-          prefixIcon: Icon(icon),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(24),
-          ),
-          labelText: labelText,
-          hintText: hintText,
-        ),
-      ),
-    );
-  }
-}
