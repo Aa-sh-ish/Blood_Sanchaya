@@ -22,20 +22,18 @@ class _HelpState extends State<Help> {
   ];
   String? selectedValue;
   @override
-  void initState() async {
+  void initState() {
     super.initState();
 
-    NotificationApi.init();
-    ListenNotifications();
+    notificationApi.initialiseNotifications();
   }
 
-  void ListenNotifications() =>
-      NotificationApi.onNotifications.stream.listen(onClickedNotification);
+  NotificationApi notificationApi = NotificationApi();
 
-  void onClickedNotification(String? payload) =>
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => Msg(),
-      ));
+  // void onClickedNotification(String? payload) =>
+  //     Navigator.of(context).push(MaterialPageRoute(
+  //       builder: (context) => Msg(),
+  //     ));
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
@@ -98,130 +96,131 @@ class _HelpState extends State<Help> {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(24),
                   ),
-                  child: Column(children: [
-                    SizedBox(
-                      height: height * 0.02,
-                    ),
-                    CustomDropdownButton2(
-                      hint: "District",
-                      buttonDecoration: BoxDecoration(
-                        color: Colors.white70,
-                        borderRadius: BorderRadius.circular(24),
-                        border: Border.all(
-                          width: 2,
-                          color: Color(0xfff70010),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: height * 0.02,
+                      ),
+                      CustomDropdownButton2(
+                        hint: "District",
+                        buttonDecoration: BoxDecoration(
+                          color: Colors.white70,
+                          borderRadius: BorderRadius.circular(24),
+                          border: Border.all(
+                            width: 2,
+                            color: Color(0xfff70010),
+                          ),
+                        ),
+                        value: selectedValue,
+                        dropdownItems: bloods,
+                        buttonHeight: height * 0.06,
+                        buttonWidth: height * 0.4,
+                        dropdownDecoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(
+                            color: Color(0xfff70010),
+                          ),
+                        ),
+                        onChanged: ((value) {
+                          setState(() {
+                            selectedValue = value;
+                          });
+                        }),
+                      ),
+                      SizedBox(
+                        height: height * 0.02,
+                      ),
+                      CustomDropdownButton2(
+                        hint: "Municipality",
+                        buttonDecoration: BoxDecoration(
+                          color: Colors.white70,
+                          borderRadius: BorderRadius.circular(24),
+                          border: Border.all(
+                            width: 2,
+                            color: Color(0xfff70010),
+                          ),
+                        ),
+                        value: selectedValue,
+                        dropdownItems: bloods,
+                        buttonHeight: height * 0.06,
+                        buttonWidth: height * 0.4,
+                        dropdownDecoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(
+                            color: Color(0xfff70010),
+                          ),
+                        ),
+                        onChanged: ((value) {
+                          setState(() {
+                            selectedValue = value;
+                          });
+                        }),
+                      ),
+                      SizedBox(
+                        height: height * 0.02,
+                      ),
+                      CustomDropdownButton2(
+                        hint: "Blood Group",
+                        buttonDecoration: BoxDecoration(
+                          color: Colors.white70,
+                          borderRadius: BorderRadius.circular(24),
+                          border: Border.all(
+                            width: 2,
+                            color: Color(0xfff70010),
+                          ),
+                        ),
+                        value: selectedValue,
+                        dropdownItems: bloods,
+                        buttonHeight: height * 0.06,
+                        buttonWidth: height * 0.4,
+                        dropdownDecoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(
+                            color: Color(0xfff70010),
+                          ),
+                        ),
+                        onChanged: ((value) {
+                          setState(() {
+                            selectedValue = value;
+                          });
+                        }),
+                      ),
+                      SizedBox(
+                        height: height * 0.02,
+                      ),
+                      SizedBox(
+                        height: height * 0.06,
+                        width: width * 0.4,
+                        child: TextField(
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(24),
+                              ),
+                              labelText: "Pint Amount",
+                              hintText: "Pint Amount"),
                         ),
                       ),
-                      value: selectedValue,
-                      dropdownItems: bloods,
-                      buttonHeight: height * 0.06,
-                      buttonWidth: height * 0.4,
-                      dropdownDecoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(
-                          color: Color(0xfff70010),
+                      SizedBox(
+                        height: height * 0.06,
+                        width: width * 0.4,
+                        child: TextField(
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(24),
+                              ),
+                              labelText: "Phone Number",
+                              hintText: "Phone Number"),
                         ),
                       ),
-                      onChanged: ((value) {
-                        setState(() {
-                          selectedValue = value;
-                        });
-                      }),
-                    ),
-                    SizedBox(
-                      height: height * 0.02,
-                    ),
-                    CustomDropdownButton2(
-                      hint: "Municipality",
-                      buttonDecoration: BoxDecoration(
-                        color: Colors.white70,
-                        borderRadius: BorderRadius.circular(24),
-                        border: Border.all(
-                          width: 2,
-                          color: Color(0xfff70010),
+                      GestureDetector(
+                        onTap: () => NotificationApi().sendNotification(
+                          'Emergency',
+                          'Somebody near you need HELP #Donate Blood Save Life',
                         ),
+                        child: Image.asset('asset/postBotton.png'),
                       ),
-                      value: selectedValue,
-                      dropdownItems: bloods,
-                      buttonHeight: height * 0.06,
-                      buttonWidth: height * 0.4,
-                      dropdownDecoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(
-                          color: Color(0xfff70010),
-                        ),
-                      ),
-                      onChanged: ((value) {
-                        setState(() {
-                          selectedValue = value;
-                        });
-                      }),
-                    ),
-                    SizedBox(
-                      height: height * 0.02,
-                    ),
-                    CustomDropdownButton2(
-                      hint: "Blood Group",
-                      buttonDecoration: BoxDecoration(
-                        color: Colors.white70,
-                        borderRadius: BorderRadius.circular(24),
-                        border: Border.all(
-                          width: 2,
-                          color: Color(0xfff70010),
-                        ),
-                      ),
-                      value: selectedValue,
-                      dropdownItems: bloods,
-                      buttonHeight: height * 0.06,
-                      buttonWidth: height * 0.4,
-                      dropdownDecoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(
-                          color: Color(0xfff70010),
-                        ),
-                      ),
-                      onChanged: ((value) {
-                        setState(() {
-                          selectedValue = value;
-                        });
-                      }),
-                    ),
-                    SizedBox(
-                      height: height * 0.02,
-                    ),
-                    SizedBox(
-                      height: height * 0.06,
-                      width: width * 0.4,
-                      child: TextField(
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(24),
-                            ),
-                            labelText: "Pint Amount",
-                            hintText: "Pint Amount"),
-                      ),
-                    ),
-                    SizedBox(
-                      height: height * 0.06,
-                      width: width * 0.4,
-                      child: TextField(
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(24),
-                            ),
-                            labelText: "Phone Number",
-                            hintText: "Phone Number"),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () => NotificationApi.showNotification(
-                          title: 'Emergency',
-                          body:
-                              'Somebody near you need HELP #Donate Blood Save Life',
-                          payload: 'Help.abs'),
-                      child: Image.asset('asset/postBotton.png'),
-                    ),
-                  ]),
+                    ],
+                  ),
                 ),
               ],
             ),

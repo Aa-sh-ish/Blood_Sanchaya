@@ -36,7 +36,7 @@ dependencies:
   
   cupertino_icons: ^1.0.2 
   #Show Local Notifications
-  flutter_local_notifications: ^6.1.0
+  flutter_local_notifications: ^13.0.0
   #Listen From Notification
   rxdart: ^0.27.1 
   dropdown_button2: ^1.9.2
