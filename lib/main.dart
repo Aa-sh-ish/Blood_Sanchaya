@@ -8,7 +8,7 @@ import 'package:khalti/khalti.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Khalti.init(
-      publicKey: "test_public_key_b12db301175d4e078e9b2fecf6b56a7e",
+      publicKey: "test_public_key_158e96969237452c9be5e153dcbc391c",
       enabledDebugging: false);
   runApp(const MyApp());
 }

@@ -1,6 +1,6 @@
 import 'package:blood_sanchaya/Event%20and%20Help.dart';
+import 'package:blood_sanchaya/Help_Post.dart';
 import 'package:blood_sanchaya/HomePage.dart';
-import 'package:blood_sanchaya/blood_bank_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
@@ -14,7 +14,7 @@ class BottonNav2 extends StatefulWidget {
 class _BottonNav2State extends State<BottonNav2> {
   int _currentState = 0;
 
-  var pages = [HomePage(), Event_and_Help(), BB_details()];
+  var pages = [HomePage(), Help_Post(), Event_and_Help()];
 
   void _onChange(int index) {
     setState(

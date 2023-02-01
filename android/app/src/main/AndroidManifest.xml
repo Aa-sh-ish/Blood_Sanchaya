@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.blood_sanchaya">
    <application
-        android:label="blood_sanchaya"
+        android:label="Blood सन्चय"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
-class AboutUs extends StatelessWidget {
-  const AboutUs({super.key});
+class About_Us extends StatelessWidget {
+  const About_Us({super.key});
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Container(
+      height: double.maxFinite,
       decoration: new BoxDecoration(
           gradient: new LinearGradient(
         colors: [
@@ -19,7 +22,7 @@ class AboutUs extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.red[300],
-            leading: Image.asset("assets/Drop.png"),
+            leading: Image.asset("assets/Logo.png"),
             title: Text(
               "Donate Blood Save Life",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -33,7 +36,7 @@ class AboutUs extends StatelessWidget {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   Text(
                     "About Us",
@@ -44,41 +47,67 @@ class AboutUs extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 40,
                   ),
-                  Text(
-                      "XXXxxXXX is full service mobile application  created with the motive of easy supply of blood over Nepal."),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text("Our Team"),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      contnr(
-                          name: "Pragarti",
-                          email: "xxxxx.xxxxxx@",
-                          linkedin: "aaaaa"),
-                      contnr(
-                          name: "Aashish",
-                          email: "aaaa",
-                          linkedin: "asdkfhashdf")
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          contain(
+                            name: "Aashish Lamsal",
+                            email: "aashish33lamsal@gmail.com ",
+                            linkedIn: "Aashish Lamshal",
+                            image: "assets/aas.jpg",
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          contain(
+                            name: "Isha Adhikari",
+                            email: "ishuadhikari398@gmail.com",
+                            linkedIn: "Isha Adhikari",
+                            image: "assets/ish.jpg",
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          contain(
+                            name: "Pragati Baniya",
+                            email: "pragatibaniya62@gmail.com",
+                            linkedIn: "Pragati Baniya",
+                            image: "assets/pp.jpg",
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          contain(
+                            name: "Santosh Mishra",
+                            email: "santoshmishra6663@gmail.com",
+                            linkedIn: "Santosh Mishra",
+                            image: "assets/sante.jpg",
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
                     ],
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      contnr(name: 'Isha', email: "ishs...@", linkedin: "isha"),
-                      contnr(
-                          name: "Sanrso", email: "sntp@...", linkedin: "snts")
-                    ],
-                  )
                 ],
               ),
             ),
@@ -89,29 +118,58 @@ class AboutUs extends StatelessWidget {
   }
 }
 
-class contnr extends StatelessWidget {
-  contnr({required this.name, required this.email, required this.linkedin});
-
+class contain extends StatefulWidget {
+  var linkedIn;
   var name;
   var email;
-  var linkedin;
+  var image;
 
+  contain(
+      {required this.name,
+      required this.email,
+      required this.linkedIn,
+      required this.image});
+
+  @override
+  State<contain> createState() => _containState();
+}
+
+class _containState extends State<contain> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
-      width: 200,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        children: [
-          Image.asset("assets/Logo.png"),
-          Text("$name"),
-          Text("$email"),
-          Text("$linkedin")
-        ],
+      child: Container(
+        child: Column(children: [
+          Image.asset(
+            "${widget.image}",
+            height: 60,
+            width: 60,
+          ),
+          Row(
+            children: [
+              Icon(Icons.person),
+              Text("${widget.name}"),
+            ],
+          ),
+          Row(
+            children: [
+              Icon(Icons.mail),
+              Container(
+                width: 175,
+                child: Text(
+                  "${widget.email}",
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+             // Icon(""),
+              Text("${widget.linkedIn}"),
+            ],
+          ),
+        ]),
       ),
     );
   }

@@ -1,6 +1,8 @@
 import 'package:blood_sanchaya/Bank_Login.dart';
 import 'package:blood_sanchaya/Events.dart';
 import 'package:blood_sanchaya/Support.dart';
+import 'package:blood_sanchaya/aboutUs.dart';
+import 'package:blood_sanchaya/about_Blood_Sanchaya.dart';
 import 'package:blood_sanchaya/blood_bank_detail.dart';
 import 'package:blood_sanchaya/date_update.dart';
 import 'package:blood_sanchaya/feedback.dart';
@@ -136,12 +138,23 @@ class _HomePageState extends State<HomePage> {
               ListTile(
                 leading: Icon(Icons.details_outlined),
                 title: Text("About Blood Sanchaya"),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => About_Blood_Sanchaya()),
+                  );
+                },
               ),
               ListTile(
                 leading: Icon(Icons.details),
                 title: Text("About Developers"),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => About_Us()),
+                  );
+                },
               ),
               ListTile(
                 leading: Icon(
