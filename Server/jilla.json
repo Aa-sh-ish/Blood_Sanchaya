@@ -1,0 +1,159 @@
+{
+    "बागमती": {
+        "सिन्धुली": {
+          "न.पा.": {
+            "दुधौली":{
+            },
+            "कमलामाई":{}
+          }
+        },
+        "रामेछाप": {
+          "न.पा.": {
+            "मन्थली":{},
+            "रामेछाप":{}
+        }
+        },
+        "दोलखा": {
+          "न.पा.": {
+            "भीमेश्वर":{},
+            "जिरी":{}
+        }
+        },
+        "सिन्धुपाल्चोक": {
+          "न.पा.": {
+            "चौतारासाँगाचोकगढी":{},
+            "मेलम्ची":{},
+            "बाह्रविसे":{}
+        }
+        },
+        "काभ्रेपलान्चोक": {
+          "न.पा.": {
+            "बनेपा":{},
+            "पनौती":{},
+            "पाँचखाल":{},
+            "मण्डनदेउपुर":{},
+            "धुलिखेल":{},
+            "नमोबुद्ध":{}
+          }
+        },
+        "ललितपुर": {
+          "उप-म.": [],
+          "न.पा.": {
+            "महालक्ष्मी":{},
+            "गोदावरी":{
+                "Nepal Red Cross Society Lalitpur Blood Bank":{
+                    "name":"Nepal Red Cross Society Lalitpur Blood Bank",
+                    "email":"ktmt@gmail.com",
+                    "ph_number":"01-5427033",
+                    "location":""
+                }
+            },
+            "ललितपुर":{
+                "Nepal Mediciti Hospital":{
+                    "name":"Nepal Mediciti Hospital",
+                    "email":"ktmt@gmail.com",
+                    "ph_number":"01-4217766",
+                    "location":"Nakhkhu Ukalo"
+
+                }
+            }
+          }
+        },
+        "भक्तपुर": {
+          "न.पा.": {
+            "सूर्यविनायक":{},
+            "मध्यपुरथिमी":{},
+            "भक्तपुर":{},
+            "चाँगुनारायण":{}
+        }
+        },
+        "काठमाडौँ": {
+          "न.पा.": {
+            "काठमाडौँ":{
+                "Kathmandu Medical College And Teaching Hospital":{
+                    "Name":"Kathmandu Medical College And Teaching Hospital",
+                    "email":"ktmt@gmail.com",
+                    "ph_number":"01-4469064",
+                    "location":"Sinamangal"
+                },
+                "Birendra Army Hospital":{
+                    "Name":"Birendra Army Hospital",
+                    "email":"xyz@gmail.com",
+                    "ph_number":"01-4271941",
+                    "location":""
+                }
+            },
+            "गोकर्णेश्वर":{
+                "Nepal Medical College":{
+                    "Name":"Nepal Medical College",
+                    "email":"xyz@gmail.com",
+                    "ph_number":"01-4911008",
+                    "location":""
+                }
+            },
+            "नागार्जुन":{
+                "Kantipur Hospital Blood Transfusion Service":{
+                    "name":"Kantipur Hospital Blood Transfusion Service",
+                    "email":"xyz@gmail.com",
+                    "ph_number":"01-4111692",
+                    "location":""
+                }
+            },
+            "किर्तिपुर":{
+                "Kalamati Blood Bank":{
+                    "Name":"Kalamati Blood Bank",
+                    "email":"xyz@gmail.com",
+                    "ph_number":"980-8530922",
+                    "location":""
+                }
+            }
+          }
+        },
+        "नुवाकोट": {
+          "न.पा.": {
+            "विदुर":{},
+            "बेलकोटगढी":{}
+          }
+        },
+        "रसुवा": {
+          "न.पा.": []
+        },
+        "धादिङ": {
+          "न.पा.": {
+            "निलकण्ठ":{},
+            "धुनीबेंशी":{}
+          }
+        },
+        "मकवानपुर": {
+          "न.पा.": {
+            "बकैया":{},
+            "मनहरी":{},
+            "बाग्मती":{},
+            "राक्सिराङ्ग":{},
+            "मकवानपुरगढी":{},
+            "कैलाश":{},
+            "भीमफेदी":{},
+            "ईन्द्रसरोवर":{}
+          }
+        },
+        "चितवन": {
+          "न.पा.": {
+            "माडी":{},
+            "भरतपुर":{
+                "Red Cross Cancer Hospital":{
+                    "Name":"Red Cross Cancer Hospital",
+                    "email":"xyz@gmail.com",
+                    "ph_number":"",
+                    "location":""
+                },
+                "Bharatpur Blood Bank":{
+                    "name":"Bharatpur Blood Bank",
+                    "email":"xyz@gmail.com",
+                    "ph_number":"056-595880",
+                    "location":"Bharatpur Hospital"
+                }
+            }
+          }
+        }
+    }
+}
