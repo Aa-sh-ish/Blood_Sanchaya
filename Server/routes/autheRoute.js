@@ -33,5 +33,4 @@ autheRouter.post("/",async(req,res,next)=>{
 
 });
 
-
 module.exports=autheRouter;

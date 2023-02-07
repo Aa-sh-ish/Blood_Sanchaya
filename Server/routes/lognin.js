@@ -23,8 +23,8 @@ loginRouter.post("/",async(req,res,next)=>{
             return res.status(400).json({msg:"Password Do not match"});
         };
 
-        //const token = jwt.sign({id:user.id},"passwordKey");
-        res.json({...user._doc});
+        const token = jwt.sign({id:user.id},"passwordKey");
+        res.json({token,...user._doc});
     }catch(e){
         res.status(500).json({error:e.message});
     }

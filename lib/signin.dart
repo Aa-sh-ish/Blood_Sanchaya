@@ -274,7 +274,7 @@ class _All_ButtonState extends State<All_Button> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: TextField(
-        obscureText: true,
+        obscureText: false,
         decoration: InputDecoration(
           fillColor: Colors.white70,
           filled: true,

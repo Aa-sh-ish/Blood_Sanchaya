@@ -28,16 +28,19 @@ const userSchema = bloodMongoose.Schema({
     phoneNumber:{
         required:true,
         type:Number,
-        // validate(value){
-        //     if(!validator.isMobilePhone(value)){
-        //         throw new Error("Phone Number is invalid");
-        //     }
-        // },
     },
-    address:{
-        required:true,
-        type:String,
-    },
+    address:[
+        {
+            lang:{
+                type:String,
+                required:true
+            },
+            lat:{
+                type:String,
+                required:true
+            }
+        }
+    ],
     bloodGroup:{
         required:true,
         type:String,

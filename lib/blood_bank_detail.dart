@@ -1,4 +1,3 @@
-import 'package:blood_sanchaya/Event%20and%20Help.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 
@@ -188,11 +187,14 @@ class _BB_detailsState extends State<BB_details> {
                                               ),
                                               GestureDetector(
                                                 onTap: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            Event_and_Help()),
+                                                  Navigator.of(context).pop();
+                                                  ScaffoldMessenger.maybeOf(
+                                                          context)
+                                                      ?.showSnackBar(
+                                                    SnackBar(
+                                                      content: Text(
+                                                          "Blood Booked Succesfully"),
+                                                    ),
                                                   );
                                                 },
                                                 child: Image.asset(

@@ -48,7 +48,7 @@ class _Help_PostState extends State<Help_Post> {
                 SizedBox(
                   height: screenHeight * 0.02,
                 ),
-                Text("Emergency Post"),
+                Text(" District"),
                 SizedBox(
                   height: screenHeight * 0.02,
                 ),
@@ -111,7 +111,7 @@ class _Help_PostState extends State<Help_Post> {
                   height: screenHeight * 0.02,
                 ),
                 CustomDropdownButton2(
-                  hint: "Municipality",
+                  hint: "blood Bank",
                   buttonDecoration: BoxDecoration(
                     color: Colors.white70,
                     borderRadius: BorderRadius.circular(24),

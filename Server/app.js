@@ -4,13 +4,18 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require("mongoose").mongoose;
+const dotenv = require("dotenv");
+
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var autheRouter = require("./routes/autheRoute");
 var loginRouter = require("./routes/lognin");
 var blood_G_Filter = require("./routes/blood_G_filter");
-// var getbbRouter = require("./routes/getBBDetails");
+var adminAutheRouter= require("./routes/adminSignin");
+var adminLoginRouter = require("./routes/adminLogin");
+var bloodStatusRouter = require("./routes/bloosStatusRoute");
 
 
 var app = express();
@@ -23,10 +28,10 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 
-
+dotenv.config();
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -41,7 +46,9 @@ app.use('/users', usersRouter);
 app.use("/signin",autheRouter);
 app.use("/login",loginRouter);
 app.use("/filter_blood",blood_G_Filter);
-// app.use("/getbb",getbbRouter);
+app.use("/adminSignin",adminAutheRouter);
+app.use("/adminLogin",adminLoginRouter);
+app.use("/bloodStatus",bloodStatusRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -63,7 +70,7 @@ app.use(function(err, req, res, next) {
 module.exports = app;
 
 
-mongoose.connect(db).then(()=>{
+mongoose.connect("mongodb://0.0.0.0:27017/Blood_sanchaya").then(()=>{
   console.log(`connection succesful`);
 }).catch((e)=>{
   console.log(e);   
