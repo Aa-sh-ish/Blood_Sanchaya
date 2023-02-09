@@ -6,7 +6,6 @@ import 'package:blood_sanchaya/about_Blood_Sanchaya.dart';
 import 'package:blood_sanchaya/blood_bank_detail.dart';
 import 'package:blood_sanchaya/date_update.dart';
 import 'package:blood_sanchaya/feedback.dart';
-import 'package:blood_sanchaya/google_map.dart';
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
@@ -302,24 +301,6 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ],
-                  ),
-                ),
-                SizedBox(
-                  height: height * 0.02,
-                ),
-                GestureDetector(
-                  onTap: (() {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Google_map(),
-                      ),
-                    );
-                  }),
-                  child: Container(
-                    color: Colors.red,
-                    height: height * 0.4,
-                    child: Google_map(),
                   ),
                 ),
               ],
