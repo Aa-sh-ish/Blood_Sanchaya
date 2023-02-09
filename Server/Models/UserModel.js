@@ -29,18 +29,10 @@ const userSchema = bloodMongoose.Schema({
         required:true,
         type:Number,
     },
-    address:[
-        {
-            lang:{
-                type:String,
-                required:true
-            },
-            lat:{
-                type:String,
-                required:true
-            }
-        }
-    ],
+    address:{
+        required:true,
+        type:String
+    },
     bloodGroup:{
         required:true,
         type:String,

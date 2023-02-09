@@ -77,7 +77,7 @@ mongoose.connect("mongodb://0.0.0.0:27017/Blood_sanchaya").then(()=>{
 });
 
 
-app.listen(8848,"localhost",(err)=>{
+app.listen(8848,"192.168.137.1",(err)=>{
   if(err){
     console.log("err:>>",err);
   }console.log("Server running in port 8848");

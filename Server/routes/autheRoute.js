@@ -16,7 +16,6 @@ autheRouter.post("/",async(req,res,next)=>{
 
         const hashedPassword = await bcryptjs.hash(password,8);
 
-
         let user = new User({
             email,
             password:hashedPassword,
@@ -30,7 +29,7 @@ autheRouter.post("/",async(req,res,next)=>{
     }catch(e){
         res.status(500).json({error:e.message});
     };
-
+    
 });
 
 module.exports=autheRouter;
