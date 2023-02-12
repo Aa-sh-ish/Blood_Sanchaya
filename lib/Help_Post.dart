@@ -142,6 +142,7 @@ class _Help_PostState extends State<Help_Post> {
                 All_Button(
                   hint_text: "Blood Pint",
                   prefix_icon: Icons.water_drop_rounded,
+                  controller: "",
                 ),
                 SizedBox(
                   height: screenHeight * 0.02,
@@ -149,6 +150,7 @@ class _Help_PostState extends State<Help_Post> {
                 All_Button(
                   hint_text: "Phone Number",
                   prefix_icon: Icons.phone,
+                  controller: "",
                 ),
                 Image.asset(
                   "assets/Post.png",

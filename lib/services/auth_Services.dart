@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:blood_sanchaya/models/userModel.dart';
 import 'package:blood_sanchaya/utils/constraints.dart';
 import 'package:blood_sanchaya/utils/utils.dart';
@@ -31,6 +33,7 @@ class AuthServices {
           headers: <String, String>{
             "Content-Type": "application/json;charset=UTF-8",
           });
+      print(res);
 
       httpErrorHAndler(
         response: res,

@@ -49,6 +49,7 @@ class _Bank_LoginState extends State<Bank_Login> {
                 hint_text: "Enter Your Bank",
                 prefix_icon: Icons.local_hospital_rounded,
                 obsecure: true,
+                controller: "",
               ),
               SizedBox(
                 height: screenHeight * 0.02,
@@ -57,6 +58,7 @@ class _Bank_LoginState extends State<Bank_Login> {
                 hint_text: "Enter Your Bank Id",
                 prefix_icon: Icons.perm_identity_outlined,
                 obsecure: true,
+                controller: "",
               ),
               SizedBox(
                 height: screenHeight * 0.02,
@@ -66,6 +68,7 @@ class _Bank_LoginState extends State<Bank_Login> {
                 prefix_icon: Icons.lock,
                 obsecure: true,
                 suffix_icon: Icons.visibility,
+                controller: "",
               ),
               GestureDetector(
                 onTap: () {

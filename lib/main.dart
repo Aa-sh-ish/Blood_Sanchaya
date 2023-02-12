@@ -5,6 +5,7 @@ import 'package:blood_sanchaya/signin.dart';
 import 'package:blood_sanchaya/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:khalti/khalti.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
