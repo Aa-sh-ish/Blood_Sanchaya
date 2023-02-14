@@ -1,6 +1,5 @@
 import 'package:blood_sanchaya/ButtomNavi.dart';
-import 'package:blood_sanchaya/HomePage.dart';
-import 'package:blood_sanchaya/blood_bank_detail.dart';
+import 'package:blood_sanchaya/services/auth_Services.dart';
 import 'package:blood_sanchaya/signin.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +12,17 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _isHidden = true;
+  TextEditingController email_Controller = TextEditingController();
+  TextEditingController password_Controller = TextEditingController();
+  final AuthServices authServices = AuthServices();
+
+  void LoginUser() {
+    authServices.loginUser(
+      context: context,
+      email: email_Controller.text,
+      password: password_Controller.text,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 30.0),
                   child: TextField(
+                    controller: email_Controller,
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white70,
@@ -104,6 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 30.0),
                   child: TextField(
+                    controller: password_Controller,
                     obscureText: _isHidden,
                     decoration: InputDecoration(
                       filled: true,
@@ -142,10 +154,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => BottonNav2()),
-                      );
+                      LoginUser();
                     },
                     child: Image.asset("assets/login in button.png",
                         width: height * 0.2)),

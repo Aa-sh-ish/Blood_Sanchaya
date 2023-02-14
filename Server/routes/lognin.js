@@ -13,14 +13,14 @@ loginRouter.post("/",async(req,res,next)=>{
 
         if(!user){
             return res.status(400).json({
-                msg:"User Doesnot Exist Please Register first"
+                message:"User Doesnot Exist Please Register first"
             });
         };
 
         const isMatch = await bcryptjs.compare(password,user.password);
 
         if(!isMatch){
-            return res.status(400).json({msg:"Password Do not match"});
+            return res.status(400).json({message:"Password Do not match"});
         };
 
         const token = jwt.sign({id:user.id},"passwordKey");

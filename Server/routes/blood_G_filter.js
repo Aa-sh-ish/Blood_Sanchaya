@@ -14,7 +14,6 @@ blood_G_Filter.post("/",async(req,res,next)=>{
             return res.status(400).json({
                 msg:"Blood Group doesn't exists"
             });
-
         }
         res.status(200).json({...blood_G});
         
@@ -23,6 +22,15 @@ blood_G_Filter.post("/",async(req,res,next)=>{
     }
     next();
 });
+
+
+// blood_gropu.get("/",async(req,res,next)=>{
+//     try{
+
+//     }catch(e){
+
+//     }
+// })
 
 module.exports = blood_G_Filter;
 

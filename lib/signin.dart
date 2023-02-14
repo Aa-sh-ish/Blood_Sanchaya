@@ -1,5 +1,5 @@
-import 'package:blood_sanchaya/blood_bank_detail.dart';
 import 'package:blood_sanchaya/services/auth_Services.dart';
+import 'package:blood_sanchaya/utils/utils.dart';
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
@@ -31,14 +31,18 @@ class _Sign_InState extends State<Sign_In> {
   final AuthServices authServices = AuthServices();
 
   void SignUpUser() {
-    authServices.SignUpUser(
-      context: context,
-      email: emailController.text,
-      password: pass_Controller.text,
-      phoneNumber: phone_num_Controller.text,
-      address: selectAddr.toString(),
-      bloodGroup: selectBlood.toString(),
-    );
+    if (re_Pass_controler.text == pass_Controller.text) {
+      authServices.SignUpUser(
+        context: context,
+        email: emailController.text,
+        password: pass_Controller.text,
+        phoneNumber: phone_num_Controller.text,
+        address: selectAddr.toString(),
+        bloodGroup: selectBlood.toString(),
+      );
+    } else {
+      showSnackbar(context, "Password Didn't Matched");
+    }
   }
 
   @override

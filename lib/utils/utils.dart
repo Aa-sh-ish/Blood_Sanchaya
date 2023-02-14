@@ -13,7 +13,7 @@ void httpErrorHAndler({
       onSuscess();
       break;
     case 400:
-      showSnackbar(context, jsonDecode(response.body)["msg"]);
+      showSnackbar(context, jsonDecode(response.body)["message"]);
       break;
     case 500:
       showSnackbar(context, jsonDecode(response.body)["error"]);

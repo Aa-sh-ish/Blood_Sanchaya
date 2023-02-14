@@ -10,6 +10,9 @@ class Bank_Login extends StatefulWidget {
 }
 
 class _Bank_LoginState extends State<Bank_Login> {
+    final TextEditingController bank_Name_Controller = TextEditingController();
+  final TextEditingController bank_Id_Controller = TextEditingController();
+  final TextEditingController passCode_Controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -49,7 +52,7 @@ class _Bank_LoginState extends State<Bank_Login> {
                 hint_text: "Enter Your Bank",
                 prefix_icon: Icons.local_hospital_rounded,
                 obsecure: true,
-                controller: "",
+                controller: bank_Name_Controller,
               ),
               SizedBox(
                 height: screenHeight * 0.02,
@@ -58,7 +61,7 @@ class _Bank_LoginState extends State<Bank_Login> {
                 hint_text: "Enter Your Bank Id",
                 prefix_icon: Icons.perm_identity_outlined,
                 obsecure: true,
-                controller: "",
+                controller: bank_Id_Controller,
               ),
               SizedBox(
                 height: screenHeight * 0.02,
@@ -68,7 +71,7 @@ class _Bank_LoginState extends State<Bank_Login> {
                 prefix_icon: Icons.lock,
                 obsecure: true,
                 suffix_icon: Icons.visibility,
-                controller: "",
+                controller: passCode_Controller,
               ),
               GestureDetector(
                 onTap: () {

@@ -1,18 +1,17 @@
-import 'package:blood_sanchaya/google_map.dart';
-import 'package:blood_sanchaya/HomePage.dart';
-import 'package:blood_sanchaya/aboutUs.dart';
-import 'package:blood_sanchaya/signin.dart';
+import 'package:blood_sanchaya/Providers/userProvider.dart';
 import 'package:blood_sanchaya/splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:khalti/khalti.dart';
 import 'package:provider/provider.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Khalti.init(
-      publicKey: "test_public_key_158e96969237452c9be5e153dcbc391c",
-      enabledDebugging: false);
-  runApp(const MyApp());
+void main() {
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {

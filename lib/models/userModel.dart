@@ -37,13 +37,13 @@ class UserModel {
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      id: map['_id'] as String,
-      email: map['email'] as String,
-      password: map['password'] as String,
-      phoneNumber: map['phoneNumber'] as String,
-      address: map['address'] as String,
-      bloodGroup: map['bloodGroup'] as String,
-      token: map["token"] as String,
+      id: map['_id'].toString(),
+      email: map['email'].toString(),
+      password: map['password'].toString(),
+      phoneNumber: map['phoneNumber'].toString(),
+      address: map['address'].toString(),
+      bloodGroup: map['bloodGroup'].toString(),
+      token: map["token"].toString(),
     );
   }
 
