@@ -118,7 +118,6 @@ class _Google_mapState extends State<Google_map> {
                 infoWindow: InfoWindow(title: 'Current Location'),
                 icon: markerIcon));
 
-            setState(() {});
             //  userLocation = (position.latitude / position.longitude) as LatLng;
           },
           child: Icon(
@@ -140,7 +139,7 @@ class _Google_mapState extends State<Google_map> {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       });
 
-      setState(() {
+     if(mounted) setState(() {
         _polylines.add(Polyline(
             width: 10,
             polylineId: PolylineId('polyLine'),

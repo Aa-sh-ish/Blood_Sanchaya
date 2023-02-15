@@ -7,6 +7,7 @@ import 'package:blood_sanchaya/blood_bank_detail.dart';
 import 'package:blood_sanchaya/date_update.dart';
 import 'package:blood_sanchaya/feedback.dart';
 import 'package:blood_sanchaya/google_map.dart';
+import 'package:blood_sanchaya/services/auth_Services.dart';
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
@@ -30,6 +31,10 @@ class _HomePageState extends State<HomePage> {
     "AB-",
   ];
   String? selectedValue;
+
+  void SignOutUser(BuildContext context) {
+    AuthServices().signOut(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -173,6 +178,19 @@ class _HomePageState extends State<HomePage> {
                   );
                 },
               ),
+              ListTile(
+                leading: Icon(
+                  Icons.logout_sharp,
+                  color: Colors.red,
+                ),
+                title: Text(
+                  "Logout",
+                  style: TextStyle(color: Color(0xffEA5959)),
+                ),
+                onTap: () {
+                  SignOutUser(context);
+                },
+              ),
             ],
           ),
         ),
@@ -304,7 +322,7 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
-                                SizedBox(
+                SizedBox(
                   height: height * 0.02,
                 ),
                 GestureDetector(

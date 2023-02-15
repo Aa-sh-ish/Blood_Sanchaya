@@ -1,4 +1,7 @@
+import 'package:blood_sanchaya/ButtomNavi.dart';
 import 'package:blood_sanchaya/Providers/userProvider.dart';
+import 'package:blood_sanchaya/login.dart';
+import 'package:blood_sanchaya/services/auth_Services.dart';
 import 'package:blood_sanchaya/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,19 +18,28 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
+  final AuthServices authService = AuthServices();
+
+  @override
+  void initState() {
+    super.initState();
+    authService.getUserData(context);
+  }
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: SplashScreen(),
+       navigatorKey: navigatorKey,
+      title: 'Blood Sanchaya',
       debugShowCheckedModeBanner: false,
-      title: "Blood Sanchaya",
+      home: Provider.of<UserProvider>(context).userModel.token.isEmpty ?  LoginPage() :  BottonNav2(),
     );
   }
 }

@@ -12,8 +12,6 @@ autheRouter.post("/",async(req,res,next)=>{
                 message:"Account already exist "
             });
         };
-
-
         const hashedPassword = await bcryptjs.hash(password,8);
 
         let user = new User({
@@ -23,13 +21,11 @@ autheRouter.post("/",async(req,res,next)=>{
             address,
             bloodGroup
         });
-
         user = await user.save();
         res.json(user);
     }catch(e){
         res.status(500).json({error:e.message});
     };
-    
 });
 
 module.exports=autheRouter;

@@ -17,11 +17,13 @@ class _BottonNav2State extends State<BottonNav2> {
   var pages = [HomePage(), Help_Post(), Event_and_Help()];
 
   void _onChange(int index) {
-    setState(
-      () {
-        _currentState = index;
-      },
-    );
+    if (mounted) {
+      setState(
+        () {
+          _currentState = index;
+        },
+      );
+    }
   }
 
   @override
