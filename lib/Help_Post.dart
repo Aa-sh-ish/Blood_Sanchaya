@@ -1,7 +1,7 @@
+import 'package:blood_sanchaya/services/notification_Services.dart';
 import 'package:blood_sanchaya/signin.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
-
 class Help_Post extends StatefulWidget {
   const Help_Post({super.key});
 
@@ -14,11 +14,27 @@ class _Help_PostState extends State<Help_Post> {
     "A+",
     "A-",
   ];
-  String? selectedValue;
+  TextEditingController pint_Controller = TextEditingController();
+  TextEditingController Ph_Controller = TextEditingController();
+  String? muniValue;
+  String? distValue;
+  String? bloodGroupValue;
+
+  void postNotification() {
+    NotificationServices().postNotification(
+        context: context,
+        district: distValue.toString(),
+        municipality: muniValue.toString(),
+        bloodGroup: bloodGroupValue.toString(),
+        bloodPint: pint_Controller.text,
+        phoneNumber: Ph_Controller.text);
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
+
     return Container(
       decoration: new BoxDecoration(
         gradient: new LinearGradient(
@@ -48,12 +64,12 @@ class _Help_PostState extends State<Help_Post> {
                 SizedBox(
                   height: screenHeight * 0.02,
                 ),
-                Text(" District"),
+                Text(" HelpPost"),
                 SizedBox(
                   height: screenHeight * 0.02,
                 ),
                 CustomDropdownButton2(
-                  hint: "Municipality",
+                  hint: "District",
                   buttonDecoration: BoxDecoration(
                     color: Colors.white70,
                     borderRadius: BorderRadius.circular(24),
@@ -62,7 +78,7 @@ class _Help_PostState extends State<Help_Post> {
                       color: Color(0xfff70010),
                     ),
                   ),
-                  value: selectedValue,
+                  value: distValue,
                   dropdownItems: bloods,
                   buttonHeight: screenHeight * 0.06,
                   buttonWidth: screenHeight * 0.4,
@@ -74,7 +90,7 @@ class _Help_PostState extends State<Help_Post> {
                   ),
                   onChanged: ((value) {
                     setState(() {
-                      selectedValue = value;
+                      distValue = value;
                     });
                   }),
                 ),
@@ -91,7 +107,7 @@ class _Help_PostState extends State<Help_Post> {
                       color: Color(0xfff70010),
                     ),
                   ),
-                  value: selectedValue,
+                  value: muniValue,
                   dropdownItems: bloods,
                   buttonHeight: screenHeight * 0.06,
                   buttonWidth: screenHeight * 0.4,
@@ -103,7 +119,7 @@ class _Help_PostState extends State<Help_Post> {
                   ),
                   onChanged: ((value) {
                     setState(() {
-                      selectedValue = value;
+                      muniValue = value;
                     });
                   }),
                 ),
@@ -111,7 +127,7 @@ class _Help_PostState extends State<Help_Post> {
                   height: screenHeight * 0.02,
                 ),
                 CustomDropdownButton2(
-                  hint: "blood Bank",
+                  hint: "blood Group",
                   buttonDecoration: BoxDecoration(
                     color: Colors.white70,
                     borderRadius: BorderRadius.circular(24),
@@ -120,7 +136,7 @@ class _Help_PostState extends State<Help_Post> {
                       color: Color(0xfff70010),
                     ),
                   ),
-                  value: selectedValue,
+                  value: bloodGroupValue,
                   dropdownItems: bloods,
                   buttonHeight: screenHeight * 0.06,
                   buttonWidth: screenHeight * 0.4,
@@ -132,7 +148,7 @@ class _Help_PostState extends State<Help_Post> {
                   ),
                   onChanged: ((value) {
                     setState(() {
-                      selectedValue = value;
+                      bloodGroupValue = value;
                     });
                   }),
                 ),
@@ -142,7 +158,7 @@ class _Help_PostState extends State<Help_Post> {
                 All_Button(
                   hint_text: "Blood Pint",
                   prefix_icon: Icons.water_drop_rounded,
-                  controller: "",
+                  controller: pint_Controller,
                 ),
                 SizedBox(
                   height: screenHeight * 0.02,
@@ -150,11 +166,32 @@ class _Help_PostState extends State<Help_Post> {
                 All_Button(
                   hint_text: "Phone Number",
                   prefix_icon: Icons.phone,
-                  controller: "",
+                  controller: Ph_Controller,
                 ),
-                Image.asset(
-                  "assets/Post.png",
-                  height: screenwidth * 0.2,
+                GestureDetector(
+                  onTap: () {
+                    postNotification();
+                    // if (muniValue == null || distValue == null) {
+                    //   showSnackbar(context, "Value Required");
+                    // } else {
+                    //   // int number = int.parse(buttonPressed);
+                    //   Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(
+                    //         builder: (context) => Event_and_Help(
+                    //           municipality: muniValue.toString(),
+                    //           district: distValue.toString(),
+                    //           bloodGroup: bloodGroupValue.toString(),
+                    //           bloodPint: pint_Controller.text,
+                    //           ph_Number: Ph_Controller.text,
+                    //         ),
+                    //       ));
+                    // }
+                  },
+                  child: Image.asset(
+                    "assets/Post.png",
+                    height: screenwidth * 0.2,
+                  ),
                 ),
               ],
             ),

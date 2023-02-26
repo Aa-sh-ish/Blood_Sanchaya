@@ -1,5 +1,6 @@
 import 'package:blood_sanchaya/Bank_Login.dart';
 import 'package:blood_sanchaya/Events.dart';
+import 'package:blood_sanchaya/Providers/userProvider.dart';
 import 'package:blood_sanchaya/Support.dart';
 import 'package:blood_sanchaya/aboutUs.dart';
 import 'package:blood_sanchaya/about_Blood_Sanchaya.dart';
@@ -10,6 +11,7 @@ import 'package:blood_sanchaya/google_map.dart';
 import 'package:blood_sanchaya/services/auth_Services.dart';
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -38,6 +40,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).userModel;
     size = MediaQuery.of(context).size;
     height = size.height;
     width = size.width;
@@ -81,11 +84,11 @@ class _HomePageState extends State<HomePage> {
               UserAccountsDrawerHeader(
                 decoration: BoxDecoration(color: Colors.red[300]),
                 accountName: Text(
-                  "user name",
+                  "${user.name}",
                   style: TextStyle(color: Colors.black),
                 ),
                 accountEmail:
-                    Text("user email", style: TextStyle(color: Colors.black)),
+                    Text(user.email, style: TextStyle(color: Colors.black)),
                 currentAccountPicture: Container(
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
@@ -323,7 +326,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 SizedBox(
-                  height: height * 0.02,
+                  height: height * 0.016,
                 ),
                 GestureDetector(
                   onTap: (() {
@@ -336,7 +339,7 @@ class _HomePageState extends State<HomePage> {
                   }),
                   child: Container(
                     color: Colors.red,
-                    height: height * 0.4,
+                    height: height * 0.38,
                     child: Google_map(),
                   ),
                 ),

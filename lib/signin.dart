@@ -28,12 +28,14 @@ class _Sign_InState extends State<Sign_In> {
   final TextEditingController pass_Controller = TextEditingController();
   final TextEditingController phone_num_Controller = TextEditingController();
   final TextEditingController re_Pass_controler = TextEditingController();
+    final TextEditingController name_Controller = TextEditingController();
   final AuthServices authServices = AuthServices();
 
   void SignUpUser() {
     if (re_Pass_controler.text == pass_Controller.text) {
       authServices.SignUpUser(
         context: context,
+        name: name_Controller.text,
         email: emailController.text,
         password: pass_Controller.text,
         phoneNumber: phone_num_Controller.text,
@@ -104,6 +106,10 @@ class _Sign_InState extends State<Sign_In> {
                     obsecure: false,
                     controller: emailController,
                   ),
+                  SizedBox(
+                    height: screenHeight * 0.02,
+                  ),
+                  All_Button(hint_text: "Name", prefix_icon: Icons.person, controller: name_Controller),
                   SizedBox(
                     height: screenHeight * 0.02,
                   ),

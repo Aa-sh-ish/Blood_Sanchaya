@@ -16,6 +16,9 @@ var blood_G_Filter = require("./routes/blood_G_filter");
 var adminAutheRouter= require("./routes/adminSignin");
 var adminLoginRouter = require("./routes/adminLogin");
 var bloodStatusRouter = require("./routes/bloosStatusRoute");
+var bankAndDistrictRouter = require("./routes/bankAndDistrict.route");
+var LocationRoute = require("./routes/location.route");
+var NotiRouter = require ("./routes/NotiRoute");
 
 
 
@@ -50,6 +53,9 @@ app.use("/filter_blood",blood_G_Filter);
 app.use("/adminSignin",adminAutheRouter);
 app.use("/adminLogin",adminLoginRouter);
 app.use("/bloodStatus",bloodStatusRouter);
+app.use("/location",bankAndDistrictRouter);
+app.use("/currentLocation",LocationRoute);
+app.use("/Post",NotiRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -15,6 +15,10 @@ const userSchema = bloodMongoose.Schema({
             message:"Please Enter a valid Email Address",
         },
     },
+    name:{
+        required:true,
+        type:String,
+    },
     password:{
         required:true,
         type:String,

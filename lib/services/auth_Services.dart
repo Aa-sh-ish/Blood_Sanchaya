@@ -11,9 +11,11 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthServices {
+  
   void SignUpUser({
     required BuildContext context,
     required String email,
+    required String name,
     required String password,
     required String phoneNumber,
     required String address,
@@ -22,6 +24,7 @@ class AuthServices {
     try {
       UserModel userModel = UserModel(
         id: "",
+        name:name,
         email: email,
         password: password,
         phoneNumber: phoneNumber,
@@ -38,7 +41,6 @@ class AuthServices {
           headers: <String, String>{
             "Content-Type": "application/json;charset=UTF-8",
           });
-      print(res);
 
       httpErrorHAndler(
         response: res,

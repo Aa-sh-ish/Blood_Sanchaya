@@ -4,7 +4,7 @@ const bcryptjs = require("bcrypt");
 
 autheRouter.post("/",async(req,res,next)=>{
     try{
-        const {email,password,phoneNumber,address,bloodGroup}=req.body;
+        const {email,name,password,phoneNumber,address,bloodGroup}=req.body;
 
         const existingUser = await User.findOne({email});
         if(existingUser){
@@ -16,6 +16,7 @@ autheRouter.post("/",async(req,res,next)=>{
 
         let user = new User({
             email,
+            name,
             password:hashedPassword,
             phoneNumber,
             address,

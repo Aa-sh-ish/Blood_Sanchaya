@@ -1,7 +1,10 @@
+import 'package:blood_sanchaya/Providers/userProvider.dart';
+import 'package:blood_sanchaya/services/location_services.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:flutter/rendering.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 
 const LatLng currentLocation = LatLng(27.7172, 85.3240);
 
@@ -21,41 +24,16 @@ class _Google_mapState extends State<Google_map> {
     return position;
   }
 
-  //late LatLng userLocation;
-
-  late List<LatLng> LatLen = [
-    LatLng(27.676435938958118, 85.31298520024238),
-    LatLng(27.699987553306677, 85.29008913886423),
-    LatLng(27.700899476916465, 85.29129076851122),
-    LatLng(27.681899494282664, 85.30880022908163),
-  ];
   late GoogleMapController googleMapController;
-  Set<Polyline> _polylines = Set<Polyline>();
-  String googleapikey = "AIzaSyCwCNBb-1NKBWaAUlEEBFNBjHvhhFF0lYw";
-
-  late PolylinePoints polylinePoints;
-  List<LatLng> polylineCoordinates = [];
 
   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
 
   void initState() {
     addCustomIcon();
     super.initState();
-    polylinePoints = PolylinePoints();
   }
 
-  void addCustomIcon() {
-    BitmapDescriptor.fromAssetImage(
-      ImageConfiguration(),
-      "assets/Logo1.png",
-    ).then(
-      (icon) {
-        setState(() {
-          markerIcon = icon;
-        });
-      },
-    );
-  }
+ 
 
   final List<Marker> _markers = <Marker>[
     Marker(
@@ -80,8 +58,31 @@ class _Google_mapState extends State<Google_map> {
     ),
   ];
 
+  void GetUserLocation(BuildContext context, num latitude,num lolongitude, id) {
+    LocationServices().getLocation(
+      context: context,
+      lattitude: latitude.toString(),
+      longitude: lolongitude.toString(),
+      userId: id.toString()
+    );
+  }
+   void addCustomIcon() {
+    BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(),
+      "assets/Logo1.png",
+    ).then(
+      (icon) {
+        setState(() {
+          markerIcon = icon;
+        });
+      },
+    );
+  }
+
   @override
+
   Widget build(BuildContext context) {
+      final user = Provider.of<UserProvider>(context).userModel;
     var size = MediaQuery.of(context).size;
     return Scaffold(
       body: GoogleMap(
@@ -95,10 +96,8 @@ class _Google_mapState extends State<Google_map> {
         scrollGesturesEnabled: true,
         zoomGesturesEnabled: true,
         markers: Set<Marker>.of(_markers),
-        polylines: _polylines,
         onMapCreated: (GoogleMapController controller) {
           googleMapController = controller;
-          setPolylines();
         },
       ),
       floatingActionButton: Padding(
@@ -106,11 +105,12 @@ class _Google_mapState extends State<Google_map> {
         child: FloatingActionButton(
           onPressed: () async {
             Position position = await getUserCurrentLocation();
+            print("Location is ${position.latitude}");
+            print("Location is ${position.longitude}");
             googleMapController.animateCamera(CameraUpdate.newCameraPosition(
                 CameraPosition(
                     target: LatLng(position.latitude, position.longitude),
                     zoom: 14)));
-            //userLocation=(position.latitude/position.longitude) as LatLng;
 
             _markers.add(Marker(
                 markerId: MarkerId('0'),
@@ -118,7 +118,7 @@ class _Google_mapState extends State<Google_map> {
                 infoWindow: InfoWindow(title: 'Current Location'),
                 icon: markerIcon));
 
-            //  userLocation = (position.latitude / position.longitude) as LatLng;
+            GetUserLocation(context,position.latitude,position.longitude,user.id);
           },
           child: Icon(
             Icons.my_location_outlined,
@@ -126,26 +126,5 @@ class _Google_mapState extends State<Google_map> {
         ),
       ),
     );
-  }
-
-  void setPolylines() async {
-    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-        "AIzaSyCwCNBb-1NKBWaAUlEEBFNBjHvhhFF0lYw",
-        PointLatLng(currentLocation.latitude, currentLocation.longitude),
-        PointLatLng(27.676435938958118, 85.31298520024238));
-
-    if (result.status == 'OK') {
-      result.points.forEach((PointLatLng point) {
-        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-      });
-
-     if(mounted) setState(() {
-        _polylines.add(Polyline(
-            width: 10,
-            polylineId: PolylineId('polyLine'),
-            color: Color(0xFF08A5CB),
-            points: polylineCoordinates));
-      });
-    }
   }
 }
