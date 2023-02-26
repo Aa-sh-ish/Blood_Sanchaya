@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 class NotificationServices {
   void postNotification({
     required BuildContext context,
+    required String name,
     required String district,
     required String municipality,
     required String bloodGroup,
@@ -16,6 +17,7 @@ class NotificationServices {
   }) async {
     try {
       NotificationModel notificationModel = NotificationModel(
+        name: name,
         disrict: district,
         municipality: municipality,
         bloodGroup: bloodGroup,
@@ -43,14 +45,11 @@ class NotificationServices {
   }
 
   getNotification({required BuildContext context}) async {
-    try {
-      var res = await http.get(Uri.parse('http://192.168.137.1:8848/Post'));
-      if (res.statusCode == 200) {
-        return json.decode(res.body);
-      }
-      print("the body is ${res.body}");
-    } catch (e) {
-      showSnackbar(context, e.toString());
+    var res = await http.get(Uri.parse('http://192.168.137.1:8848/Post'));
+    if (res.statusCode == 200) {
+      return json.decode(res.body);
+    } else {
+      showSnackbar(context, "value Required");
     }
   }
 }

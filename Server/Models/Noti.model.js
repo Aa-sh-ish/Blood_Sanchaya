@@ -1,6 +1,11 @@
 const bloodMongoose = require("mongoose");
 
 const NotiSchema = bloodMongoose.Schema({
+    name:{
+        required:true,
+        type:String,
+    },
+
     disrict:{
         required:true,
         type:String,

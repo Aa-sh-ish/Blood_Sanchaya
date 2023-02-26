@@ -11,10 +11,10 @@ NotiRouter.post("/help",async(req,res,next)=>{
 
         newNotification.save().then((data)=>{
             res.status(200).json({data});
-        })
+        });
 
     }catch(e){
-        res.status(500).json({error:e.message});
+        res.status(500).json({error:e.error});
     }
 });
 
@@ -29,6 +29,6 @@ NotiRouter.get("/", async (req, res) => {
   });
 
 
-
+  
 
 module.exports= NotiRouter;

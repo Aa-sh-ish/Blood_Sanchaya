@@ -2,42 +2,26 @@ import 'dart:convert';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class NotificationModel {
+  String name;
   String disrict;
   String municipality;
   String bloodGroup;
   String bloodPint;
   String phoneNumber;
 
-  
   NotificationModel({
+    required this.name,
     required this.disrict,
     required this.municipality,
     required this.bloodGroup,
     required this.bloodPint,
     required this.phoneNumber,
   });
-
-
-
-
-  NotificationModel copyWith({
-    String? disrict,
-    String? municipality,
-    String? bloodGroup,
-    String? bloodPint,
-    String? phoneNumber,
-  }) {
-    return NotificationModel(
-      disrict: disrict ?? this.disrict,
-      municipality: municipality ?? this.municipality,
-      bloodGroup: bloodGroup ?? this.bloodGroup,
-      bloodPint: bloodPint ?? this.bloodPint,
-      phoneNumber: phoneNumber ?? this.phoneNumber,
-    );
-  }
+  
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'name': name,
       'disrict': disrict,
       'municipality': municipality,
       'bloodGroup': bloodGroup,
@@ -48,6 +32,7 @@ class NotificationModel {
 
   factory NotificationModel.fromMap(Map<String, dynamic> map) {
     return NotificationModel(
+      name: map['name'] as String,
       disrict: map['disrict'] as String,
       municipality: map['municipality'] as String,
       bloodGroup: map['bloodGroup'] as String,

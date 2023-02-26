@@ -37,7 +37,7 @@ LocationRoute.get("/Location",async(req,res,next)=>{
     console.log(userLocation);
     res.status(200).json(userLocation);
     }catch(e){
-
+      res.status(500).json(e);
     }
 })
 

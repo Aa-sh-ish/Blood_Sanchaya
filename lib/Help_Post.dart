@@ -1,7 +1,13 @@
+import 'package:blood_sanchaya/Providers/notification.Provider.dart';
 import 'package:blood_sanchaya/services/notification_Services.dart';
 import 'package:blood_sanchaya/signin.dart';
+import 'package:blood_sanchaya/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
+import 'package:provider/provider.dart';
+
+import 'Providers/userProvider.dart';
+
 class Help_Post extends StatefulWidget {
   const Help_Post({super.key});
 
@@ -20,20 +26,30 @@ class _Help_PostState extends State<Help_Post> {
   String? distValue;
   String? bloodGroupValue;
 
-  void postNotification() {
-    NotificationServices().postNotification(
-        context: context,
-        district: distValue.toString(),
-        municipality: muniValue.toString(),
-        bloodGroup: bloodGroupValue.toString(),
-        bloodPint: pint_Controller.text,
-        phoneNumber: Ph_Controller.text);
+  @override
+  void initState() {
+    super.initState();
+    notificationApi.initialiseNotifications();
   }
+
+  NotificationApi notificationApi = NotificationApi();
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).userModel;
     double screenHeight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
+
+    void postNotification() async {
+      NotificationServices().postNotification(
+          context: context,
+          name: user.name.toString(),
+          district: distValue.toString(),
+          municipality: muniValue.toString(),
+          bloodGroup: bloodGroupValue.toString(),
+          bloodPint: pint_Controller.text,
+          phoneNumber: Ph_Controller.text);
+    }
 
     return Container(
       decoration: new BoxDecoration(
@@ -169,24 +185,18 @@ class _Help_PostState extends State<Help_Post> {
                   controller: Ph_Controller,
                 ),
                 GestureDetector(
-                  onTap: () {
-                    postNotification();
-                    // if (muniValue == null || distValue == null) {
-                    //   showSnackbar(context, "Value Required");
-                    // } else {
-                    //   // int number = int.parse(buttonPressed);
-                    //   Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //         builder: (context) => Event_and_Help(
-                    //           municipality: muniValue.toString(),
-                    //           district: distValue.toString(),
-                    //           bloodGroup: bloodGroupValue.toString(),
-                    //           bloodPint: pint_Controller.text,
-                    //           ph_Number: Ph_Controller.text,
-                    //         ),
-                    //       ));
-                    // }
+                  onTap: () async {
+                    if (pint_Controller == null ||
+                        Ph_Controller == null ||
+                        muniValue == null ||
+                        distValue == null ||
+                        bloodGroupValue == null) {
+                      showSnackbar(context, "Value Required");
+                    } else {
+                      postNotification();
+                      NotificationApi().sendNotification("Emergency",
+                          "${bloodGroupValue} is needed in ${distValue}");
+                    }
                   },
                   child: Image.asset(
                     "assets/Post.png",

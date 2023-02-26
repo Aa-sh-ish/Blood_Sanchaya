@@ -1,33 +1,30 @@
-import 'package:blood_sanchaya/Providers/userProvider.dart';
-import 'package:blood_sanchaya/models/userModel.dart';
+import 'package:blood_sanchaya/Providers/notification.Provider.dart';
 import 'package:blood_sanchaya/services/notification_Services.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-// import 'package:phone_caller/phone_caller.dart';
 
 class Event_and_Help extends StatefulWidget {
   @override
   State<Event_and_Help> createState() => _Event_and_HelpState();
-  
 }
 
 class _Event_and_HelpState extends State<Event_and_Help> {
-
-List<dynamic> data = [];
-    void initState() {
+  List<dynamic> data = [];
+  void initState() {
     super.initState();
+    
     NotificationServices().getNotification(context: context).then((results) {
       setState(() {
         data = results;
       });
     });
   }
-  @override
 
+
+
+  @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
-    final user = Provider.of<UserProvider>(context).userModel;
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -58,8 +55,8 @@ List<dynamic> data = [];
                   itemBuilder: ((context, index) {
                     final item = data[index];
                     return Post(
-                      user: user,
-                      municipality:item['municipality'],
+                      users: item['name'],
+                      municipality: item['municipality'],
                       district: item['disrict'],
                       bloodGroup: item['bloodGroup'].toString(),
                       ph_Number: item['phoneNumber'].toString(),
@@ -67,20 +64,6 @@ List<dynamic> data = [];
                     );
                   }),
                 ),
-              ),
-              // SizedBox(
-              //   height: 20,
-              // ),
-              // Post(
-              //   user: user,
-              //   municipality: municipality,
-              //   district: district,
-              //   bloodGroup: bloodGroup,
-              //   ph_Number: ph_Number,
-              //   screenwidth: screenwidth,
-              // )
-              SizedBox(
-                height: 20,
               ),
             ],
           ),
@@ -93,7 +76,7 @@ List<dynamic> data = [];
 class Post extends StatelessWidget {
   const Post({
     Key? key,
-    required this.user,
+    required this.users,
     required this.municipality,
     required this.district,
     required this.bloodGroup,
@@ -101,7 +84,7 @@ class Post extends StatelessWidget {
     required this.screenwidth,
   }) : super(key: key);
 
-  final UserModel user;
+  final String users;
   final String municipality;
   final String district;
   final String bloodGroup;
@@ -125,7 +108,7 @@ class Post extends StatelessWidget {
                 height: 20,
               ),
               Text(
-                "${user.name} from ${municipality} , ${district} needs ${bloodGroup}blood please contact ${user.name} in ${ph_Number} ThankYou!!",
+                "${users} from ${municipality} , ${district} needs ${bloodGroup}blood please contact ${users} in ${ph_Number} ThankYou!!",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               Row(
