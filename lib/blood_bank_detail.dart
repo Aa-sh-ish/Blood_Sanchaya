@@ -1,14 +1,41 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:blood_sanchaya/services/districtandBank_Services.dart';
+import 'package:blood_sanchaya/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 
 class BB_details extends StatefulWidget {
-  const BB_details({super.key});
+  final String district;
+  final String municipality;
+  final String bb_Name;
+  const BB_details({
+    required this.district,
+    required this.municipality,
+    required this.bb_Name,
+  });
 
   @override
   State<BB_details> createState() => _BB_detailsState();
 }
 
 class _BB_detailsState extends State<BB_details> {
+  Map<String, dynamic> data = {};
+  void initState() {
+    super.initState();
+    DistrictAndBankServices()
+        .getBloodBankDetails(
+      context: context,
+      districtName: widget.district,
+      municipalityName: widget.municipality,
+      bankName: widget.bb_Name,
+    )
+        .then((results) {
+      setState(() {
+        data = results;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -52,21 +79,25 @@ class _BB_detailsState extends State<BB_details> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Blood Bank XYZ",
+                          "${data['bankName']}",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text("Bharatpur-11,Chitwan"),
-                        Text("Bharatpur Hospital"),
+                        Text("${data['location']}"),
                         Row(
                           children: [
-                            Icon(
-                              Icons.call,
-                              color: Color(0xffFE0011),
+                            InkWell(
+                              onTap: (() {
+                                callNumber("${data['ph_number']}");
+                              }),
+                              child: Icon(
+                                Icons.call,
+                                color: Color(0xffFE0011),
+                              ),
                             ),
                             SizedBox(
                               width: 20,
                             ),
-                            Text("01-111111"),
+                            Text("${data['ph_number']}"),
                           ],
                         ),
                         Row(
@@ -78,7 +109,7 @@ class _BB_detailsState extends State<BB_details> {
                             SizedBox(
                               width: 20,
                             ),
-                            Text("xyz@gmail.com"),
+                            Text("${data['email']}"),
                           ],
                         )
                       ],

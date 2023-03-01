@@ -1,5 +1,6 @@
 import 'package:blood_sanchaya/Providers/notification.Provider.dart';
-import 'package:blood_sanchaya/services/notification_Services.dart';
+import 'package:blood_sanchaya/services/districtandBank_Services.dart';
+import 'package:blood_sanchaya/services/helpPost_Services.dart';
 import 'package:blood_sanchaya/signin.dart';
 import 'package:blood_sanchaya/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -22,17 +23,43 @@ class _Help_PostState extends State<Help_Post> {
   ];
   TextEditingController pint_Controller = TextEditingController();
   TextEditingController Ph_Controller = TextEditingController();
-  String? muniValue;
-  String? distValue;
+  DistrictAndBankServices districtAndBankServices = DistrictAndBankServices();
+  NotificationApi notificationApi = NotificationApi();
+
+  List<String> districts = [];
+  String? selectedDistrict;
+
+  List<String> municipalities = [];
+  String? selectedMunicipalities;
   String? bloodGroupValue;
 
   @override
   void initState() {
     super.initState();
     notificationApi.initialiseNotifications();
+    fetchDistricts();
+    fetchMunicipality();
   }
 
-  NotificationApi notificationApi = NotificationApi();
+  void fetchDistricts() async {
+    final List<String> fetchedDistricts =
+        await districtAndBankServices.getDistricts(context: context);
+
+    setState(() {
+      districts = fetchedDistricts;
+    });
+  }
+
+  void fetchMunicipality() async {
+    final List<String> fetchedMunicipalities =
+        await districtAndBankServices.getMunicipality(
+      context: context,
+      districtName: "Lalitpur",
+    );
+    setState(() {
+      municipalities = fetchedMunicipalities;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +71,8 @@ class _Help_PostState extends State<Help_Post> {
       NotificationServices().postNotification(
           context: context,
           name: user.name.toString(),
-          district: distValue.toString(),
-          municipality: muniValue.toString(),
+          district: selectedDistrict.toString(),
+          municipality: selectedMunicipalities.toString(),
           bloodGroup: bloodGroupValue.toString(),
           bloodPint: pint_Controller.text,
           phoneNumber: Ph_Controller.text);
@@ -94,8 +121,8 @@ class _Help_PostState extends State<Help_Post> {
                       color: Color(0xfff70010),
                     ),
                   ),
-                  value: distValue,
-                  dropdownItems: bloods,
+                  value: selectedDistrict,
+                  dropdownItems: districts,
                   buttonHeight: screenHeight * 0.06,
                   buttonWidth: screenHeight * 0.4,
                   dropdownDecoration: BoxDecoration(
@@ -106,7 +133,7 @@ class _Help_PostState extends State<Help_Post> {
                   ),
                   onChanged: ((value) {
                     setState(() {
-                      distValue = value;
+                      selectedDistrict = value;
                     });
                   }),
                 ),
@@ -123,8 +150,8 @@ class _Help_PostState extends State<Help_Post> {
                       color: Color(0xfff70010),
                     ),
                   ),
-                  value: muniValue,
-                  dropdownItems: bloods,
+                  value: selectedMunicipalities,
+                  dropdownItems: municipalities,
                   buttonHeight: screenHeight * 0.06,
                   buttonWidth: screenHeight * 0.4,
                   dropdownDecoration: BoxDecoration(
@@ -135,7 +162,7 @@ class _Help_PostState extends State<Help_Post> {
                   ),
                   onChanged: ((value) {
                     setState(() {
-                      muniValue = value;
+                      selectedMunicipalities = value;
                     });
                   }),
                 ),
@@ -188,14 +215,14 @@ class _Help_PostState extends State<Help_Post> {
                   onTap: () async {
                     if (pint_Controller == null ||
                         Ph_Controller == null ||
-                        muniValue == null ||
-                        distValue == null ||
+                        selectedDistrict == null ||
+                        selectedMunicipalities == null ||
                         bloodGroupValue == null) {
                       showSnackbar(context, "Value Required");
                     } else {
                       postNotification();
                       NotificationApi().sendNotification("Emergency",
-                          "${bloodGroupValue} is needed in ${distValue}");
+                          "${bloodGroupValue} is needed in ${selectedDistrict}");
                     }
                   },
                   child: Image.asset(

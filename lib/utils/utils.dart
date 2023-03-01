@@ -1,7 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher_platform_interface/url_launcher_platform_interface.dart';
 
 void httpErrorHAndler({
   required http.Response response,
@@ -29,4 +32,8 @@ void showSnackbar(BuildContext context, String text) {
       content: Text(text),
     ),
   );
+}
+
+void callNumber(String number) async {
+  await FlutterPhoneDirectCaller.callNumber(number);
 }

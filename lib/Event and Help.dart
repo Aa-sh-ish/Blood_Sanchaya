@@ -1,5 +1,6 @@
-import 'package:blood_sanchaya/Providers/notification.Provider.dart';
-import 'package:blood_sanchaya/services/notification_Services.dart';
+import 'package:blood_sanchaya/services/districtandBank_Services.dart';
+import 'package:blood_sanchaya/services/helpPost_Services.dart';
+import 'package:blood_sanchaya/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class Event_and_Help extends StatefulWidget {
@@ -11,15 +12,12 @@ class _Event_and_HelpState extends State<Event_and_Help> {
   List<dynamic> data = [];
   void initState() {
     super.initState();
-    
     NotificationServices().getNotification(context: context).then((results) {
       setState(() {
         data = results;
       });
     });
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -54,13 +52,20 @@ class _Event_and_HelpState extends State<Event_and_Help> {
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: ((context, index) {
                     final item = data[index];
-                    return Post(
-                      users: item['name'],
-                      municipality: item['municipality'],
-                      district: item['disrict'],
-                      bloodGroup: item['bloodGroup'].toString(),
-                      ph_Number: item['phoneNumber'].toString(),
-                      screenwidth: screenwidth,
+                    return Column(
+                      children: [
+                        Post(
+                          users: item['name'],
+                          municipality: item['municipality'],
+                          district: item['disrict'],
+                          bloodGroup: item['bloodGroup'].toString(),
+                          ph_Number: item['phoneNumber'].toString(),
+                          screenwidth: screenwidth,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        )
+                      ],
                     );
                   }),
                 ),
@@ -119,7 +124,9 @@ class Post extends StatelessWidget {
                     width: screenwidth * 0.3,
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      callNumber("${ph_Number}");
+                    },
                     child: Image.asset(
                       "assets/Call.png",
                       width: screenwidth * 0.3,

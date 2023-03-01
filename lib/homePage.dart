@@ -9,6 +9,8 @@ import 'package:blood_sanchaya/date_update.dart';
 import 'package:blood_sanchaya/feedback.dart';
 import 'package:blood_sanchaya/google_map.dart';
 import 'package:blood_sanchaya/services/auth_Services.dart';
+import 'package:blood_sanchaya/services/districtandBank_Services.dart';
+import 'package:blood_sanchaya/utils/utils.dart';
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,10 +34,60 @@ class _HomePageState extends State<HomePage> {
     "AB+",
     "AB-",
   ];
+
   String? selectedValue;
 
   void SignOutUser(BuildContext context) {
     AuthServices().signOut(context);
+  }
+
+  @override
+  final DistrictAndBankServices districtAndBankServices =
+      DistrictAndBankServices();
+
+  List<String> districts = [];
+  String? selectedDistrict;
+
+  List<String> municipalities = [];
+  String? selectedMunicipalities;
+
+  List<String> bloodBankName = [];
+  String? selectedBloodBankName;
+  void initState() {
+    super.initState();
+    fetchDistricts();
+  }
+
+  void fetchDistricts() async {
+    final List<String> fetchedDistricts =
+        await districtAndBankServices.getDistricts(context: context);
+
+    setState(() {
+      districts = fetchedDistricts;
+    });
+  }
+
+  void fetchMunicipality(String district) async {
+    final List<String> fetchedMunicipalities =
+        await districtAndBankServices.getMunicipality(
+      context: context,
+      districtName: district,
+    );
+    setState(() {
+      municipalities = fetchedMunicipalities;
+    });
+  }
+
+  void fetchBloodBankName(String district, String municipality) async {
+    final List<String> fetchBloodBankName =
+        await districtAndBankServices.getBlooodBankName(
+      context: context,
+      districtName: district,
+      municipalityName: municipality,
+    );
+    setState(() {
+      bloodBankName = fetchBloodBankName;
+    });
   }
 
   @override
@@ -235,8 +287,8 @@ class _HomePageState extends State<HomePage> {
                             color: Color(0xfff70010),
                           ),
                         ),
-                        value: selectedValue,
-                        dropdownItems: bloods,
+                        value: selectedDistrict,
+                        dropdownItems: districts,
                         buttonHeight: height * 0.06,
                         buttonWidth: height * 0.4,
                         dropdownDecoration: BoxDecoration(
@@ -247,7 +299,10 @@ class _HomePageState extends State<HomePage> {
                         ),
                         onChanged: ((value) {
                           setState(() {
-                            selectedValue = value;
+                            selectedDistrict = value;
+                            if (selectedDistrict.toString() != null) {
+                              fetchMunicipality(selectedDistrict.toString());
+                            }
                           });
                         }),
                       ),
@@ -264,8 +319,8 @@ class _HomePageState extends State<HomePage> {
                             color: Color(0xfff70010),
                           ),
                         ),
-                        value: selectedValue,
-                        dropdownItems: bloods,
+                        value: selectedMunicipalities,
+                        dropdownItems: municipalities,
                         buttonHeight: height * 0.06,
                         buttonWidth: height * 0.4,
                         dropdownDecoration: BoxDecoration(
@@ -276,7 +331,13 @@ class _HomePageState extends State<HomePage> {
                         ),
                         onChanged: ((value) {
                           setState(() {
-                            selectedValue = value;
+                            selectedMunicipalities = value;
+                            if (selectedDistrict.toString() != null &&
+                                selectedMunicipalities.toString() != null) {
+                              fetchBloodBankName(selectedDistrict.toString(),
+                                  selectedMunicipalities.toString());
+                            } else
+                              showSnackbar(context, "Khalki xa");
                           });
                         }),
                       ),
@@ -285,6 +346,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       CustomDropdownButton2(
                         hint: "Blood Bank",
+                        dropdownWidth: 0.8 * width,
                         buttonDecoration: BoxDecoration(
                           color: Colors.white70,
                           borderRadius: BorderRadius.circular(24),
@@ -293,8 +355,8 @@ class _HomePageState extends State<HomePage> {
                             color: Color(0xfff70010),
                           ),
                         ),
-                        value: selectedValue,
-                        dropdownItems: bloods,
+                        value: selectedBloodBankName,
+                        dropdownItems: bloodBankName,
                         buttonHeight: height * 0.06,
                         buttonWidth: height * 0.4,
                         dropdownDecoration: BoxDecoration(
@@ -305,7 +367,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         onChanged: ((value) {
                           setState(() {
-                            selectedValue = value;
+                            selectedBloodBankName = value;
                           });
                         }),
                       ),
@@ -314,7 +376,12 @@ class _HomePageState extends State<HomePage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => BB_details()),
+                              builder: (context) => BB_details(
+                                district: selectedDistrict.toString(),
+                                municipality: selectedMunicipalities.toString(),
+                                bb_Name: selectedBloodBankName.toString(),
+                              ),
+                            ),
                           );
                         },
                         child: Image.asset(
