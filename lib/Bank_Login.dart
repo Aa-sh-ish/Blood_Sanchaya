@@ -1,6 +1,10 @@
 import 'package:blood_sanchaya/BB.dart';
+import 'package:blood_sanchaya/services/admin_Services.dart';
+import 'package:blood_sanchaya/services/districtandBank_Services.dart';
 import 'package:blood_sanchaya/signin.dart';
+import 'package:blood_sanchaya/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:dropdown_button2/custom_dropdown_button2.dart';
 
 class Bank_Login extends StatefulWidget {
   const Bank_Login({super.key});
@@ -10,11 +14,71 @@ class Bank_Login extends StatefulWidget {
 }
 
 class _Bank_LoginState extends State<Bank_Login> {
-    final TextEditingController bank_Name_Controller = TextEditingController();
-  final TextEditingController bank_Id_Controller = TextEditingController();
-  final TextEditingController passCode_Controller = TextEditingController();
+
+final TextEditingController passCode_Controller = TextEditingController();
+
+
+   @override
+
+  final DistrictAndBankServices districtAndBankServices =
+      DistrictAndBankServices();
+
+  List<String> districts = [];
+  String? selectedDistrict;
+
+  List<String> municipalities = [];
+  String? selectedMunicipalities;
+
+  List<String> bloodBankName = [];
+  String? selectedBloodBankName;
+  void initState() {
+    super.initState();
+    fetchDistricts();
+  }
+
+  void fetchDistricts() async {
+    final List<String> fetchedDistricts =
+        await districtAndBankServices.getDistricts(context: context);
+
+    setState(() {
+      districts = fetchedDistricts;
+    });
+  }
+
+  void fetchMunicipality(String district) async {
+    final List<String> fetchedMunicipalities =
+        await districtAndBankServices.getMunicipality(
+      context: context,
+      districtName: district,
+    );
+    setState(() {
+      municipalities = fetchedMunicipalities;
+    });
+  }
+
+  void fetchBloodBankName(String district, String municipality) async {
+    final List<String> fetchBloodBankName =
+        await districtAndBankServices.getBlooodBankName(
+      context: context,
+      districtName: district,
+      municipalityName: municipality,
+    );
+    setState(() {
+      bloodBankName = fetchBloodBankName;
+    });
+  }
+
+    void loginasBloodBank() {
+    BloodBank().LoginBloodBank(
+        context: context,
+        BankName: selectedBloodBankName.toString(),
+        adminPassword: "sec076bct002");
+  }
+
   @override
+
   Widget build(BuildContext context) {
+
     double screenHeight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
     return Container(
@@ -45,23 +109,99 @@ class _Bank_LoginState extends State<Bank_Login> {
                 "assets/Logo.png",
                 width: screenwidth * 0.3,
               ),
+              CustomDropdownButton2(
+                hint: "District",
+                buttonDecoration: BoxDecoration(
+                  color: Colors.white70,
+                  borderRadius: BorderRadius.circular(24),
+                  border: Border.all(
+                    width: 2,
+                    color: Color(0xfff70010),
+                  ),
+                ),
+                value: selectedDistrict,
+                dropdownItems: districts,
+                buttonHeight: screenHeight * 0.06,
+                buttonWidth: screenHeight * 0.4,
+                dropdownDecoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(
+                    color: Color(0xfff70010),
+                  ),
+                ),
+                onChanged: ((value) {
+                  setState(() {
+                    selectedDistrict = value;
+                    if (selectedDistrict.toString() != null) {
+                      fetchMunicipality(selectedDistrict.toString());
+                    }
+                  });
+                }),
+              ),
               SizedBox(
                 height: screenHeight * 0.02,
               ),
-              All_Button(
-                hint_text: "Enter Your Bank",
-                prefix_icon: Icons.local_hospital_rounded,
-                obsecure: true,
-                controller: bank_Name_Controller,
+              CustomDropdownButton2(
+                hint: "Municipality",
+                buttonDecoration: BoxDecoration(
+                  color: Colors.white70,
+                  borderRadius: BorderRadius.circular(24),
+                  border: Border.all(
+                    width: 2,
+                    color: Color(0xfff70010),
+                  ),
+                ),
+                value: selectedMunicipalities,
+                dropdownItems: municipalities,
+                buttonHeight: screenHeight * 0.06,
+                buttonWidth: screenHeight * 0.4,
+                dropdownDecoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(
+                    color: Color(0xfff70010),
+                  ),
+                ),
+                onChanged: ((value) {
+                  setState(() {
+                    selectedMunicipalities = value;
+                    if (selectedDistrict.toString() != null &&
+                        selectedMunicipalities.toString() != null) {
+                      fetchBloodBankName(selectedDistrict.toString(),
+                          selectedMunicipalities.toString());
+                    } else
+                      showSnackbar(context, "Ghalti xa");
+                  });
+                }),
               ),
               SizedBox(
                 height: screenHeight * 0.02,
               ),
-              All_Button(
-                hint_text: "Enter Your Bank Id",
-                prefix_icon: Icons.perm_identity_outlined,
-                obsecure: true,
-                controller: bank_Id_Controller,
+              CustomDropdownButton2(
+                hint: "Blood Bank",
+                dropdownWidth: 0.8 * screenwidth,
+                buttonDecoration: BoxDecoration(
+                  color: Colors.white70,
+                  borderRadius: BorderRadius.circular(24),
+                  border: Border.all(
+                    width: 2,
+                    color: Color(0xfff70010),
+                  ),
+                ),
+                value: selectedBloodBankName,
+                dropdownItems: bloodBankName,
+                buttonHeight: screenHeight * 0.06,
+                buttonWidth: screenHeight * 0.4,
+                dropdownDecoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(
+                    color: Color(0xfff70010),
+                  ),
+                ),
+                onChanged: ((value) {
+                  setState(() {
+                    selectedBloodBankName = value;
+                  });
+                }),
               ),
               SizedBox(
                 height: screenHeight * 0.02,
@@ -75,10 +215,7 @@ class _Bank_LoginState extends State<Bank_Login> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Blood_Banks()),
-                  );
+                  loginasBloodBank();
                 },
                 child: Image.asset(
                   "assets/login in button.png",

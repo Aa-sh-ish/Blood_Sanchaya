@@ -9,24 +9,9 @@ class Blood_Banks extends StatefulWidget {
 }
 
 class _Blood_BanksState extends State<Blood_Banks> {
-  // void IncreamentCounter() {
-  //   setState(() {
-  //     counter++;
-  //     Number_inc_sub_controller.text = counter.toString();
-  //   });
-  // }
-
-  // void DecreamentCounter() {
-  //   setState(() {
-  //     if (counter > 0) {
-  //       counter--;
-  //     }
-  //     Number_inc_sub_controller.text = counter.toString();
-  //   });
-  // }
-
+  
   @override
-  int counter = 0;
+ // int counter = 0;
   TextEditingController Number_inc_sub_controller = TextEditingController();
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -74,9 +59,9 @@ class _Blood_BanksState extends State<Blood_Banks> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Teext(text: "      A+"),
-                      Incrementer(),
-                      Incrementer(),
-                      Incrementer(),
+                      UpdateField(),
+                      UpdateField(),
+                      UpdateField(),
                       SizedBox(width: 10)
                     ],
                   ),
@@ -85,9 +70,9 @@ class _Blood_BanksState extends State<Blood_Banks> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Teext(text: "      A-"),
-                      Incrementer(),
-                      Incrementer(),
-                      Incrementer(),
+                      UpdateField(),
+                      UpdateField(),
+                      UpdateField(),
                       SizedBox(width: 10)
                     ],
                   ),
@@ -96,9 +81,9 @@ class _Blood_BanksState extends State<Blood_Banks> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Teext(text: "      B+"),
-                      Incrementer(),
-                      Incrementer(),
-                      Incrementer(),
+                      UpdateField(),
+                      UpdateField(),
+                      UpdateField(),
                       SizedBox(width: 10)
                     ],
                   ),
@@ -107,9 +92,9 @@ class _Blood_BanksState extends State<Blood_Banks> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Teext(text: "      B-"),
-                      Incrementer(),
-                      Incrementer(),
-                      Incrementer(),
+                      UpdateField(),
+                      UpdateField(),
+                      UpdateField(),
                       SizedBox(width: 10)
                     ],
                   ),
@@ -118,9 +103,9 @@ class _Blood_BanksState extends State<Blood_Banks> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Teext(text: "      A+"),
-                      Incrementer(),
-                      Incrementer(),
-                      Incrementer(),
+                      UpdateField(),
+                      UpdateField(),
+                      UpdateField(),
                       SizedBox(width: 10)
                     ],
                   ),
@@ -129,9 +114,9 @@ class _Blood_BanksState extends State<Blood_Banks> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Teext(text: "     AB+"),
-                      Incrementer(),
-                      Incrementer(),
-                      Incrementer(),
+                      UpdateField(),
+                      UpdateField(),
+                      UpdateField(),
                       SizedBox(width: 10)
                     ],
                   ),
@@ -140,9 +125,9 @@ class _Blood_BanksState extends State<Blood_Banks> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Teext(text: "     AB-"),
-                      Incrementer(),
-                      Incrementer(),
-                      Incrementer(),
+                      UpdateField(),
+                      UpdateField(),
+                      UpdateField(),
                       SizedBox(width: 10)
                     ],
                   ),
@@ -151,9 +136,9 @@ class _Blood_BanksState extends State<Blood_Banks> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Teext(text: "      O+"),
-                      Incrementer(),
-                      Incrementer(),
-                      Incrementer(),
+                      UpdateField(),
+                      UpdateField(),
+                      UpdateField(),
                       SizedBox(width: 10)
                     ],
                   ),
@@ -162,9 +147,9 @@ class _Blood_BanksState extends State<Blood_Banks> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Teext(text: "      O-"),
-                      Incrementer(),
-                      Incrementer(),
-                      Incrementer(),
+                      UpdateField(),
+                      UpdateField(),
+                      UpdateField(),
                       SizedBox(width: 10)
                     ],
                   ),
@@ -183,57 +168,37 @@ class _Blood_BanksState extends State<Blood_Banks> {
   }
 }
 
-class Incrementer extends StatelessWidget {
+class UpdateField extends StatelessWidget {
   @override
   int counter = 0;
   TextEditingController Number_inc_sub_controller = TextEditingController();
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
+   double screenHeight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
     return Container(
       width: screenwidth * 0.2,
+      height: screenHeight*0.04,
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(20)),
       child: Row(
         children: [
           Container(
             height: 20,
-            width: 50,
-            child: TextField(
-              controller: Number_inc_sub_controller,
-              decoration: InputDecoration(
-                hintText: "$counter",
+            width: 90,
+            child: Padding(
+              padding: const EdgeInsets.only(top:2,left: 18,),
+              child: TextField(
+                
+              //  controller: Number_inc_sub_controller,
+                decoration: InputDecoration(
+
+                ),
+                keyboardType: TextInputType.number,
+                style: TextStyle(fontSize:15),
+                textAlign: TextAlign.center,
+                readOnly: false,
               ),
-              style: TextStyle(fontSize: 20),
-              textAlign: TextAlign.center,
-              readOnly: true,
             ),
-          ),
-          Column(
-            children: [
-              IconButton(
-                onPressed: () {
-                  counter++;
-                  Number_inc_sub_controller.text = counter.toString();
-                },
-                icon: Icon(
-                  Icons.add_circle_outline,
-                  color: Colors.green,
-                ),
-              ),
-              IconButton(
-                onPressed: () {
-                  if (counter > 0) {
-                    counter--;
-                  }
-                  Number_inc_sub_controller.text = counter.toString();
-                },
-                icon: Icon(
-                  Icons.remove_circle_outline,
-                  color: Colors.red[200],
-                ),
-              ),
-            ],
           ),
         ],
       ),

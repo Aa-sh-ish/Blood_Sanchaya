@@ -21,6 +21,7 @@ class _Help_PostState extends State<Help_Post> {
     "A+",
     "A-",
   ];
+   String? bloodGroupValue;
   TextEditingController pint_Controller = TextEditingController();
   TextEditingController Ph_Controller = TextEditingController();
   DistrictAndBankServices districtAndBankServices = DistrictAndBankServices();
@@ -31,7 +32,7 @@ class _Help_PostState extends State<Help_Post> {
 
   List<String> municipalities = [];
   String? selectedMunicipalities;
-  String? bloodGroupValue;
+ 
 
   @override
   void initState() {

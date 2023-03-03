@@ -1,18 +1,66 @@
+import 'package:blood_sanchaya/Providers/userProvider.dart';
+import 'package:blood_sanchaya/services/donateDate_Services.dart';
+import 'package:blood_sanchaya/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class Date_Update extends StatefulWidget {
-  const Date_Update({super.key});
+  Date_Update({required this.userId});
+  var userId;
 
   @override
   State<Date_Update> createState() => _Date_UpdateState();
 }
 
 class _Date_UpdateState extends State<Date_Update> {
+  DonateDateServices _donateDateServices = DonateDateServices();
   DateTime next = DateTime.now();
+  Map<String, dynamic> data = {};
+
+  void postDate(String date, String Id, String nextDate) {
+    _donateDateServices.postDonateDate(
+        context: context,
+        donateDate: date,
+        userId: Id,
+        nextDonateDate: nextDate);
+  }
+
+  void update(String date, String Id, String nextDate) {
+    _donateDateServices.updateDonateDate(
+      context: context,
+      donateDate: date,
+      userId: Id,
+      nextDonateDate: nextDate,
+    );
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUpdatedate();
+  }
+
+  void getUpdatedate() {
+    _donateDateServices
+        .getDonateDate(
+      context: context,
+      userId: widget.userId,
+    )
+        .then((result) {
+      setState(() {
+        if (result == null) {
+          postDate("2022", widget.userId, "2033");
+        } else {
+          data = result;
+        }
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).userModel;
     double screenHeight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
     return Container(
@@ -49,7 +97,7 @@ class _Date_UpdateState extends State<Date_Update> {
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  DateFormat.yMMMMEEEEd().format(next),
+                  "${data["donateDate"]}",
                   style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -94,9 +142,7 @@ class _Date_UpdateState extends State<Date_Update> {
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold),
                                       ),
-                                      Text(
-                                          DateFormat.yMMMMEEEEd()
-                                              .format(_NewDate),
+                                      Text("${data["nextDonateDate"]}",
                                           style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold,
@@ -108,6 +154,7 @@ class _Date_UpdateState extends State<Date_Update> {
                                           ElevatedButton(
                                             onPressed: () {
                                               Navigator.pop(context);
+                                              Navigator.pop(context);
                                             },
                                             style: ElevatedButton.styleFrom(
                                               primary: Colors.lightGreen,
@@ -116,7 +163,19 @@ class _Date_UpdateState extends State<Date_Update> {
                                           ),
                                           ElevatedButton(
                                             onPressed: () {
+                                              // if ("${data}['userId']" == null) {
+                                              //   postDate(
+                                              //       next.toString(),
+                                              //       user.id,
+                                              //       _NewDate.toString());
+                                              // } else {
+                                              update(next.toString(), user.id,
+                                                  _NewDate.toString());
                                               Navigator.pop(context);
+                                              Navigator.pop(context);
+                                              setState(() {
+                                              });
+                                              // }
                                             },
                                             style: ElevatedButton.styleFrom(
                                               primary: Colors.red[300],
@@ -154,7 +213,7 @@ class _Date_UpdateState extends State<Date_Update> {
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  DateFormat.yMMMMEEEEd().format(next.add(Duration(days: 91))),
+                  "${data["nextDonateDate"]}",
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

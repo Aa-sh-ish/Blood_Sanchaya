@@ -24,18 +24,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var size, height, width;
-  final List<String> bloods = [
-    "A+",
-    "A-",
-    "B+",
-    "B-",
-    "O+",
-    "O-",
-    "AB+",
-    "AB-",
-  ];
-
-  String? selectedValue;
 
   void SignOutUser(BuildContext context) {
     AuthServices().signOut(context);
@@ -157,7 +145,8 @@ class _HomePageState extends State<HomePage> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Date_Update()),
+                    MaterialPageRoute(
+                        builder: (context) => Date_Update(userId: user.id)),
                   );
                 },
               ),
@@ -373,16 +362,27 @@ class _HomePageState extends State<HomePage> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => BB_details(
-                                district: selectedDistrict.toString(),
-                                municipality: selectedMunicipalities.toString(),
-                                bb_Name: selectedBloodBankName.toString(),
+                          if (selectedDistrict.toString() == null) {
+                            showSnackbar(context,
+                                "Select District ");
+                          } else if (selectedMunicipalities.toString() == null) {
+                            showSnackbar(context,
+                                "Select  Municipality");
+                          }else if(selectedBloodBankName.toString()==null)
+                          {
+                            showSnackbar(context,
+                                "Select BloodBank");
+                          }else{ Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => BB_details(
+                                  district: selectedDistrict.toString(),
+                                  municipality:
+                                      selectedMunicipalities.toString(),
+                                  bb_Name: selectedBloodBankName.toString(),
+                                ),
                               ),
-                            ),
-                          );
+                            );}
                         },
                         child: Image.asset(
                           "assets/Search.png",

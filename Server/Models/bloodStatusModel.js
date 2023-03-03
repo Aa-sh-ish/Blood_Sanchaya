@@ -1,5 +1,6 @@
 const bloodMongoose = require("mongoose");
 const bloodTpyeMongoose = require("mongoose");
+const bankNameMongoose = require("mongoose");
 
 const bloodTpyeSchema = bloodTpyeMongoose.Schema({
     status:{
@@ -10,7 +11,7 @@ const bloodTpyeSchema = bloodTpyeMongoose.Schema({
     Plasma:{
         require:true,
         type:Number,
-        default:1
+        default:0
     },
     platelets:{
         require:true,
@@ -30,5 +31,16 @@ const bloodStatusSchema = bloodMongoose.Schema({
     "O-":bloodTpyeSchema,
 });
 
-const BloodStatus = bloodMongoose.model("BloodStatus",bloodStatusSchema);
+const banknameSchema =  bankNameMongoose.Schema({
+    "bankName" :{
+        require:true,
+        type:String
+    },
+    "bloods":bloodStatusSchema,
+    
+},{
+  timestamps:true,  
+});
+
+const BloodStatus = bloodMongoose.model("BloodStatus",banknameSchema);
 module.exports= BloodStatus;

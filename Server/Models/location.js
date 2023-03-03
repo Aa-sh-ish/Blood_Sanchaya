@@ -2,10 +2,20 @@ const mongoose = require("mongoose");
 
 const locationSchema = new mongoose.Schema({
     userId:{
-        type:mongoose.Types.ObjectId,
-        ref:"users",
-        require:true,
-        // unique:true
+        required:true,
+        type:String,
+    },
+    userName:{
+        required:true,
+        type:String
+    },
+    phone:{
+        required:true,
+        type:String
+    },
+    bloodGrouo:{
+        required:true,
+        type:String
     },
     lattitude:{
         required:true,
@@ -14,6 +24,10 @@ const locationSchema = new mongoose.Schema({
     longitude:{
         type:String,
         rewuired:true
+    },
+    updatedate:{
+        type:String,
+        required:true,
     }
 });
 

@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:blood_sanchaya/services/BloodStatus_Services.dart';
 import 'package:blood_sanchaya/services/districtandBank_Services.dart';
 import 'package:blood_sanchaya/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +21,31 @@ class BB_details extends StatefulWidget {
 
 class _BB_detailsState extends State<BB_details> {
   Map<String, dynamic> data = {};
+  Map<String, dynamic> status = {};
+  final List<String> bloods = [
+    "A+",
+    "A-",
+    "B+",
+    "B-",
+    "AB+",
+    "AB-",
+    "O+",
+    "O-",
+  ];
+
+  DistrictAndBankServices _districtAndBankServices = DistrictAndBankServices();
+  //BloodStatusServises _bloodStatusServises = BloodStatusServises();
+  late Map<String, dynamic> _bloodBankDetails = {};
+  bool _isLoading = true;
+
   void initState() {
     super.initState();
-    DistrictAndBankServices()
+    _getBloodBankDetails();
+    getbankDetails();
+  }
+
+  void getbankDetails() {
+    _districtAndBankServices
         .getBloodBankDetails(
       context: context,
       districtName: widget.district,
@@ -34,6 +57,22 @@ class _BB_detailsState extends State<BB_details> {
         data = results;
       });
     });
+  }
+
+  void _getBloodBankDetails() async {
+    try {
+      final bloodBankService = BloodStatusServises();
+      _bloodBankDetails =
+          await bloodBankService.getBloodBankDetails(widget.bb_Name);
+      setState(() {
+        _isLoading = false;
+      });
+    } catch (e) {
+      print(e.toString());
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   @override
@@ -133,140 +172,159 @@ class _BB_detailsState extends State<BB_details> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(24)),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          color: Color(0xfff6e6e6),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(
-                                "Status On 2022-12-13/04:02 PM   ",
-                                style: TextStyle(
-                                  color: Colors.lightGreen,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Container(
-                          color: Color(0xffE9E8EA),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Teext(text: "Blood Group"),
-                              Teext(text: "Available"),
-                              Teext(text: "Plasma"),
-                              Teext(text: "Platelets")
-                            ],
-                          ),
-                        ),
-                      ),
-                      ListView.builder(
-                        itemCount: 8,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: (() {
-                              showAnimatedDialog(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (BuildContext context) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 400, left: 20, right: 20),
-                                    child: Container(
-                                      height: 200,
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(24)),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          Text(
-                                            "Book Blood A+ xx amount xx plateles",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 12,
-                                                color: Colors.black,
-                                                decoration:
-                                                    TextDecoration.none),
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              GestureDetector(
-                                                onTap: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: Image.asset(
-                                                  "assets/Cancel.png",
-                                                  width: screenwidth * 0.3,
-                                                ),
-                                              ),
-                                              GestureDetector(
-                                                onTap: () {
-                                                  Navigator.of(context).pop();
-                                                  ScaffoldMessenger.maybeOf(
-                                                          context)
-                                                      ?.showSnackBar(
-                                                    SnackBar(
-                                                      content: Text(
-                                                          "Blood Booked Succesfully"),
-                                                    ),
-                                                  );
-                                                },
-                                                child: Image.asset(
-                                                  "assets/Book.png",
-                                                  width: screenwidth * 0.3,
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                        ],
+                child: _isLoading
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(24)),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                color: Color(0xfff6e6e6),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      "Status On 2022-12-13/04:02 PM   ",
+                                      style: TextStyle(
+                                        color: Colors.lightGreen,
                                       ),
                                     ),
-                                  );
-                                },
-                                animationType: DialogTransitionType.size,
-                                curve: Curves.fastOutSlowIn,
-                                duration: Duration(seconds: 1),
-                              );
-                            }),
-                            child: Container(
-                              width: screenwidth * 0.8,
-                              child: Padding(
-                                padding: const EdgeInsets.all(6.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Teext(text: "A+"),
-                                    Teext(text: "XX"),
-                                    Teext(text: "XX"),
-                                    Teext(text: "XX")
                                   ],
                                 ),
                               ),
                             ),
-                          );
-                        },
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
+                              child: Container(
+                                color: Color(0xffE9E8EA),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Teext(text: "Blood Group"),
+                                    Teext(text: "Available"),
+                                    Teext(text: "Plasma"),
+                                    Teext(text: "Platelets")
+                                  ],
+                                ),
+                              ),
+                            ),
+                            ListView.builder(
+                              itemCount: 8,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: (() {
+                                    showAnimatedDialog(
+                                      context: context,
+                                      barrierDismissible: false,
+                                      builder: (BuildContext context) {
+                                        return Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 400, left: 20, right: 20),
+                                          child: Container(
+                                            height: 200,
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(24)),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                Text(
+                                                  "Book Blood ${bloods[index]}",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 12,
+                                                      color: Colors.black,
+                                                      decoration:
+                                                          TextDecoration.none),
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
+                                                  children: [
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                      child: Image.asset(
+                                                        "assets/Cancel.png",
+                                                        width:
+                                                            screenwidth * 0.3,
+                                                      ),
+                                                    ),
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                        ScaffoldMessenger
+                                                                .maybeOf(
+                                                                    context)
+                                                            ?.showSnackBar(
+                                                          SnackBar(
+                                                            content: Text(
+                                                                "Blood Booked Succesfully"),
+                                                          ),
+                                                        );
+                                                      },
+                                                      child: Image.asset(
+                                                        "assets/Book.png",
+                                                        width:
+                                                            screenwidth * 0.3,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      animationType: DialogTransitionType.size,
+                                      curve: Curves.fastOutSlowIn,
+                                      duration: Duration(seconds: 1),
+                                    );
+                                  }),
+                                  child: Container(
+                                    width: screenwidth * 0.8,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(6.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Teext(text: bloods[index]),
+                                          Teext(
+                                              text:
+                                                  "${_bloodBankDetails['bloods']['${bloods[index]}']['status']}"),
+                                          Teext(
+                                              text:
+                                                  "${_bloodBankDetails['bloods']['${bloods[index]}']['Plasma']}"),
+                                          Teext(
+                                              text:
+                                                  "${_bloodBankDetails['bloods']['${bloods[index]}']['platelets']}"),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
-                ),
               ),
             ],
           ),

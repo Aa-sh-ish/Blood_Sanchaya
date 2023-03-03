@@ -3,10 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher_platform_interface/url_launcher_platform_interface.dart';
 
-void httpErrorHAndler({
+ httpErrorHAndler({
   required http.Response response,
   required BuildContext context,
   required VoidCallback onSuscess,
@@ -17,6 +15,9 @@ void httpErrorHAndler({
       break;
     case 400:
       showSnackbar(context, jsonDecode(response.body)["message"]);
+      break;
+      case 404:
+      showSnackbar(context, "Not Allowed");
       break;
     case 500:
       showSnackbar(context, jsonDecode(response.body)["error"]);

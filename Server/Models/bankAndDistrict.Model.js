@@ -17,6 +17,7 @@ const bankSchema = new mongoose.Schema({
         type:String,
         default:"Nepal"
     }
+    
 });
 
 

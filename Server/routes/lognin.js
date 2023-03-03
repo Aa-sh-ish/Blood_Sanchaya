@@ -23,7 +23,7 @@ loginRouter.post("/",async(req,res,next)=>{
         if(!isMatch){
             return res.status(400).json({message:"Password Do not match"});
         };
-
+        
         const token = jwt.sign({id:user.id},"passwordKey");
         res.json({token,...user._doc});
     }catch(e){

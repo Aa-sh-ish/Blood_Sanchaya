@@ -6,7 +6,7 @@ const Admin = require("../Models/AdminModel");
 
 adminAutheRouter.post("/",async(req,res,next)=>{
     try{
-        const {BankName,adminPassword,bankId}= req.body;
+        const {BankName,adminPassword,district,municipality}= req.body;
 
         const existingAdmin = await Admin.findOne({BankName});
        
@@ -22,7 +22,8 @@ adminAutheRouter.post("/",async(req,res,next)=>{
         let admin = new Admin({
             BankName,
             adminPassword:hashedPassword,
-            bankId
+            district,
+            municipality
         });
 
         admin = await admin.save();

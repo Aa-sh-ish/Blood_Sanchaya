@@ -78,9 +78,7 @@ Router.post('/bloodbank', async (req, res) => {
 
   try {
     const district = await bankAndDistrict.findOne({ districtName });
-    console.log(district);
     const municipality = district.municipality.find(m => m.municipalityName === municipalityName);
-    console.log(municipality);
     const bloodBank = municipality.Bloodbank.find(b => b.bankName === bankName);
 
     if (!bloodBank) {

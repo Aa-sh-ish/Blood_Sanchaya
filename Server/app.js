@@ -19,6 +19,8 @@ var bloodStatusRouter = require("./routes/bloosStatusRoute");
 var bankAndDistrictRouter = require("./routes/bankAndDistrict.route");
 var LocationRoute = require("./routes/location.route");
 var NotiRouter = require ("./routes/NotiRoute");
+var DonateDateRouter = require("./routes/updateDonateDate.route");
+
 
 
 
@@ -56,6 +58,7 @@ app.use("/bloodStatus",bloodStatusRouter);
 app.use("/location",bankAndDistrictRouter);
 app.use("/currentLocation",LocationRoute);
 app.use("/Post",NotiRouter);
+app.use("/donatedate",DonateDateRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
