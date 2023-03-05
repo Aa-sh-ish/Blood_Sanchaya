@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
  httpErrorHAndler({
   required http.Response response,
   required BuildContext context,
-  required VoidCallback onSuscess,
+  required  onSuscess,
 }) {
   switch (response.statusCode) {
     case 200:

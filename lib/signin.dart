@@ -2,6 +2,8 @@ import 'package:blood_sanchaya/services/auth_Services.dart';
 import 'package:blood_sanchaya/utils/utils.dart';
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:blood_sanchaya/services/districtandBank_Services.dart';
+
 
 class Sign_In extends StatefulWidget {
   const Sign_In({super.key});
@@ -21,7 +23,6 @@ class _Sign_InState extends State<Sign_In> {
     "AB+",
     "AB-",
   ];
-  String? selectAddr;
   String? selectBlood;
 
   final TextEditingController emailController = TextEditingController();
@@ -39,7 +40,7 @@ class _Sign_InState extends State<Sign_In> {
         email: emailController.text,
         password: pass_Controller.text,
         phoneNumber: phone_num_Controller.text,
-        address: selectAddr.toString(),
+        address: selectedDistrict.toString(),
         bloodGroup: selectBlood.toString(),
       );
     } else {
@@ -48,6 +49,32 @@ class _Sign_InState extends State<Sign_In> {
   }
 
   @override
+
+
+
+ void initState() {
+    super.initState();
+    fetchDistricts();
+  }
+    List<String> districts = [];
+  String? selectedDistrict;
+
+     final DistrictAndBankServices districtAndBankServices =
+      DistrictAndBankServices();
+
+
+    void fetchDistricts() async {
+    final List<String> fetchedDistricts =
+        await districtAndBankServices.getDistricts(context: context);
+
+    setState(() {
+      districts = fetchedDistricts;
+    });
+  }
+
+  @override
+
+
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
@@ -153,8 +180,8 @@ class _Sign_InState extends State<Sign_In> {
                             color: Colors.white70,
                             borderRadius: BorderRadius.circular(24),
                           ),
-                          value: selectAddr,
-                          dropdownItems: bloods,
+                          value: selectedDistrict,
+                          dropdownItems: districts,
                           buttonHeight: screenHeight * 0.06,
                           buttonWidth: screenwidth * 0.4,
                           dropdownDecoration: BoxDecoration(
@@ -165,7 +192,7 @@ class _Sign_InState extends State<Sign_In> {
                           ),
                           onChanged: ((value) {
                             setState(() {
-                              selectAddr = value;
+                              selectedDistrict = value;
                             });
                           }),
                         ),

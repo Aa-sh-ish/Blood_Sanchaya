@@ -21,6 +21,7 @@ const bankSchema = new mongoose.Schema({
 });
 
 
+
 const munilSchema = new mongoose.Schema({
     municipalityName:{
         require:true,

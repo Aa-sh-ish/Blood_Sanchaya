@@ -14,20 +14,20 @@ const locationSchema = new mongoose.Schema({
         type:String
     },
     bloodGrouo:{
-        required:true,
-        type:String
+        type:String,
+        default:"A+"
     },
     lattitude:{
         required:true,
-        type:String
+        type:Number
     },
     longitude:{
-        type:String,
-        rewuired:true
+        type:Number,
+        required:true
     },
     updatedate:{
         type:String,
-        required:true,
+        default:"2022-02-02"
     }
 });
 

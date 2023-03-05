@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class NotificationServices {
-
-  
   void postNotification({
     required BuildContext context,
     required String name,
@@ -52,6 +50,21 @@ class NotificationServices {
       return json.decode(res.body);
     } else {
       showSnackbar(context, "value Required");
+    }
+  }
+
+   deleteNotification(BuildContext context, String id) async {
+    final url = Uri.parse('http://192.168.137.1:8848/Post/delete');
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({'id': id}),
+    );
+    if (response.statusCode == 200) {
+      showSnackbar(context, "Deleted Succesfully");
+    } else if (response.statusCode == 404) {
+    } else {
+      throw Exception('Internal server error');
     }
   }
 }

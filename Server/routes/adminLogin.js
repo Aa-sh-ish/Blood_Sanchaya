@@ -18,7 +18,6 @@ adminLoginRouter.post("/", async(req,res,next)=>{
                 
             });
         };
-
         const adminPassMatch = await bcrypt.compare(adminPassword,admin.adminPassword);
 
         if(!adminPassMatch){

@@ -33,4 +33,36 @@ bloodStatusRouter.post('/get', async (req, res) => {
   }
 });
 
+bloodStatusRouter.post('/updateStatus', async (req, res) => {
+  try {
+    const bankName = req.body.bankName;
+    const bloodStatus = await BloodStatus.findOneAndUpdate(
+      { bankName },
+      req.body,
+      { new: true }
+    );
+    if (!bloodStatus) {
+      return res.status(404).send({ message: 'BloodStatus not found' });
+    }
+    res.send(bloodStatus);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: 'Server error' });
+  }
+})
+
+
+bloodStatusRouter.post("/onebankName",async(req,res,next)=>{
+  const bankName =req.body;
+try{
+  data = await BloodStatus.findOne(bankName);
+  if(!data){
+    res.status(200).json(1234);
+  }else{
+    res.status(400).json(5678);
+  }
+}catch(e){
+  res.status(500).json({error:e.error});
+}
+}),
 module.exports=bloodStatusRouter;

@@ -50,7 +50,7 @@ class _Date_UpdateState extends State<Date_Update> {
         .then((result) {
       setState(() {
         if (result == null) {
-          postDate("2022", widget.userId, "2033");
+          postDate("20022/02/02", widget.userId, "2022/02/02");
         } else {
           data = result;
         }

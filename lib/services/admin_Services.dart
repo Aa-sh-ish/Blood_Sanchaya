@@ -25,7 +25,7 @@ class BloodBank {
       httpErrorHAndler(response: res, context: context, onSuscess: () {
         Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Blood_Banks()),
+                    MaterialPageRoute(builder: (context) => Blood_Banks(bbName: BankName)),
                   );
       });
     } catch (err) {

@@ -1,4 +1,5 @@
 import 'package:blood_sanchaya/Providers/userProvider.dart';
+import 'package:blood_sanchaya/services/donateDate_Services.dart';
 import 'package:blood_sanchaya/services/location_services.dart';
 import 'package:blood_sanchaya/utils/utils.dart';
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
@@ -10,17 +11,19 @@ import 'package:provider/provider.dart';
 const LatLng currentLocation = LatLng(27.7172, 85.3240);
 
 class Google_map extends StatefulWidget {
+  Google_map({required this.userId});
+  String userId;
   @override
   State<Google_map> createState() => _Google_mapState();
 }
 
 class _Google_mapState extends State<Google_map> {
-
   final List<String> bloods = [
     "A+",
     "A-",
   ];
-   String? selectedBlood ;
+  String? selectedBlood;
+  DateTime today = DateTime.now();
   Future<Position> getUserCurrentLocation() async {
     await Geolocator.requestPermission()
         .then((value) {})
@@ -34,6 +37,8 @@ class _Google_mapState extends State<Google_map> {
   final LocationServices _locationServices = LocationServices();
   List<Map<String, dynamic>> _locationList = [];
   Set<Marker> _markers = {};
+  Map<String, dynamic> data = {};
+  int oneId = 0;
 
   late GoogleMapController googleMapController;
 
@@ -43,15 +48,40 @@ class _Google_mapState extends State<Google_map> {
   void initState() {
     super.initState();
     addCustomIcon();
-    fetchData();
+    DonateDateServices()
+        .getDonateDate(context: context, userId: widget.userId)
+        .then((result) {
+      setState(() {
+        if (result == null) {
+          DonateDateServices().postDonateDate(
+              context: context,
+              donateDate: "2022-02-02",
+              userId: widget.userId,
+              nextDonateDate: "2022-02-02");
+        } else {
+          data = result;
+        }
+      });
+    });
+    LocationServices().getOneId(context, widget.userId).then((result) {
+      oneId = result;
+    });
   }
 
-  Future<void> fetchData() async {
+  Future<void> fetchData(String bloodGrouo, num lattitude, num longitude,
+      String updatedate) async {
     try {
       final List<Map<String, dynamic>> locationList =
-          await _locationServices.getLocation();
+          await _locationServices.getLocation(
+        context: context,
+        bloodGrouo: bloodGrouo,
+        lattitude: lattitude,
+        longitude: longitude,
+        updatedate: updatedate,
+      );
       setState(() {
         _locationList = locationList;
+        print(_locationList);
         _addMarkers();
       });
     } catch (e) {
@@ -63,11 +93,10 @@ class _Google_mapState extends State<Google_map> {
     _locationList.forEach((location) {
       final marker = Marker(
         markerId: MarkerId(location['userId']),
-        position: LatLng(double.parse(location['lattitude']),
-            double.parse(location['longitude'])),
+        position: LatLng((location['lattitude']), (location['longitude'])),
         infoWindow: InfoWindow(
-          title: "Location",
-          snippet: "User ${location['userId']}",
+          title: "${location['userName']}",
+          snippet: "${location['phone']}",
         ),
       );
       _markers.add(marker);
@@ -87,13 +116,46 @@ class _Google_mapState extends State<Google_map> {
     );
   }
 
-
-  void GetUserLocation(BuildContext context, num latitude, num longitude, id) {
+  void postUserLocation(
+    context,
+    id,
+    String userName,
+    String phone,
+    String bloodGrouo,
+    num lattitude,
+    num longitude,
+  ) {
     LocationServices().postLocation(
-        context: context,
-        userId: id,
-        lattitude: latitude.toString(),
-        longitude: longitude.toString());
+      context: context,
+      userId: id,
+      userName: userName,
+      phone: phone,
+      bloodGrouo: bloodGrouo,
+      lattitude: lattitude,
+      longitude: longitude,
+      updatedate: "${data["donateDate"]}",
+    );
+  }
+
+  void updateUserLocation(
+    context,
+    id,
+    String userName,
+    String phone,
+    String bloodGrouo,
+    num lattitude,
+    num longitude,
+  ) {
+    LocationServices().updateLocation(
+      context: context,
+      userId: id,
+      userName: userName,
+      phone: phone,
+      bloodGrouo: bloodGrouo,
+      lattitude: lattitude,
+      longitude: longitude,
+      updatedate: "${data["donateDate"]}",
+    );
   }
 
   @override
@@ -121,32 +183,34 @@ class _Google_mapState extends State<Google_map> {
         child: Column(
           children: [
             CustomDropdownButton2(
-                  hint: "Blood",
-                  buttonDecoration: BoxDecoration(
-                    color: Colors.white70,
-                    borderRadius: BorderRadius.circular(24),
-                    border: Border.all(
-                      width: 2,
-                      color: Color(0xfff70010),
-                    ),
-                  ),
-                  value: selectedBlood,
-                  dropdownItems: bloods,
-                  buttonHeight: size.height * 0.04,
-                  buttonWidth: size.height * 0.1,
-                  dropdownDecoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(14),
-                    border: Border.all(
-                      color: Color(0xfff70010),
-                    ),
-                  ),
-                  onChanged: ((value) {
-                    setState(() {
-                      selectedBlood = value;
-                    });
-                  }),
+              hint: "Blood",
+              buttonDecoration: BoxDecoration(
+                color: Colors.white70,
+                borderRadius: BorderRadius.circular(24),
+                border: Border.all(
+                  width: 2,
+                  color: Color(0xfff70010),
                 ),
-                SizedBox(height: size.height*0.02,),
+              ),
+              value: selectedBlood,
+              dropdownItems: bloods,
+              buttonHeight: size.height * 0.04,
+              buttonWidth: size.height * 0.1,
+              dropdownDecoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(
+                  color: Color(0xfff70010),
+                ),
+              ),
+              onChanged: ((value) {
+                setState(() {
+                  selectedBlood = value;
+                });
+              }),
+            ),
+            SizedBox(
+              height: size.height * 0.02,
+            ),
             FloatingActionButton(
               onPressed: () async {
                 Position position = await getUserCurrentLocation();
@@ -154,15 +218,44 @@ class _Google_mapState extends State<Google_map> {
                   CameraUpdate.newCameraPosition(
                     CameraPosition(
                         target: LatLng(position.latitude, position.longitude),
-                        zoom: 14),
+                        zoom: 12),
                   ),
                 );
 
                 _markers.add(Marker(
                     markerId: MarkerId('0'),
                     position: LatLng(position.latitude, position.longitude),
-                    infoWindow: InfoWindow(title: 'Current Location'),
+                    infoWindow: InfoWindow(title: user.name),
                     icon: markerIcon));
+
+                if (oneId != 1234) {
+                  updateUserLocation(
+                      context,
+                      user.id,
+                      user.name,
+                      user.phoneNumber,
+                      user.bloodGroup,
+                      position.latitude,
+                      position.longitude);
+                } else {
+                  postUserLocation(
+                      context,
+                      user.id,
+                      user.name,
+                      user.phoneNumber,
+                      user.bloodGroup,
+                      position.latitude,
+                      position.longitude);
+                }
+                print(today.toString());
+                fetchData(
+                    selectedBlood.toString() == null
+                        ? user.bloodGroup
+                        : selectedBlood.toString(),
+                    position.latitude,
+                    position.longitude,
+                    today.toString());
+
                 setState(() {});
               },
               child: Icon(

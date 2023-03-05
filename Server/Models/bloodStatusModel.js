@@ -1,46 +1,59 @@
 const bloodMongoose = require("mongoose");
-const bloodTpyeMongoose = require("mongoose");
-const bankNameMongoose = require("mongoose");
 
-const bloodTpyeSchema = bloodTpyeMongoose.Schema({
-    status:{
-        require:true,
-        type:Number,
-        default:0
-    },
-    Plasma:{
-        require:true,
-        type:Number,
-        default:0
-    },
-    platelets:{
-        require:true,
-        type:Number,
-        default:0
-    }
-});
+
 
 const bloodStatusSchema = bloodMongoose.Schema({
-    "A+":bloodTpyeSchema,
-    "A-":bloodTpyeSchema,
-    "B+":bloodTpyeSchema,
-    "B-":bloodTpyeSchema,
-    "AB+":bloodTpyeSchema,
-    "AB-":bloodTpyeSchema,
-    "O+":bloodTpyeSchema,
-    "O-":bloodTpyeSchema,
-});
 
-const banknameSchema =  bankNameMongoose.Schema({
     "bankName" :{
         require:true,
         type:String
     },
-    "bloods":bloodStatusSchema,
-    
+    "A+":{
+        require:true,
+        type:Number,
+        default:0
+        },
+    "A-":{
+        require:true,
+        type:Number,
+        default:0
+        },
+    "B+":{
+        require:true,
+        type:Number,
+        default:0
+        },
+    "B-":{
+        require:true,
+        type:Number,
+        default:0
+        },
+    "AB+":{
+        require:true,
+        type:Number,
+        default:0
+        },
+    "AB-":{
+        require:true,
+        type:Number,
+        default:0
+        },
+    "O+":{
+        require:true,
+        type:Number,
+        default:0
+        },
+    "O-":{
+        require:true,
+        type:Number,
+        default:0
+        },
+        
 },{
-  timestamps:true,  
-});
+    timestamps:true,  
+  });
 
-const BloodStatus = bloodMongoose.model("BloodStatus",banknameSchema);
+const BloodStatus = bloodMongoose.model("BloodStatus",bloodStatusSchema);
 module.exports= BloodStatus;
+
+

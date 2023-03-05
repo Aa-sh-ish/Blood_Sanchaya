@@ -20,6 +20,7 @@ var bankAndDistrictRouter = require("./routes/bankAndDistrict.route");
 var LocationRoute = require("./routes/location.route");
 var NotiRouter = require ("./routes/NotiRoute");
 var DonateDateRouter = require("./routes/updateDonateDate.route");
+var BankNoti = require("./routes/bankNotification");
 
 
 
@@ -59,6 +60,7 @@ app.use("/location",bankAndDistrictRouter);
 app.use("/currentLocation",LocationRoute);
 app.use("/Post",NotiRouter);
 app.use("/donatedate",DonateDateRouter);
+app.use("/bankNotification",BankNoti);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

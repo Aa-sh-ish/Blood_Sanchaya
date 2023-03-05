@@ -20,6 +20,12 @@ class _Help_PostState extends State<Help_Post> {
   final List<String> bloods = [
     "A+",
     "A-",
+    "B+",
+    "B-",
+    "AB+",
+    "AB-",
+    "O+",
+    "O-"
   ];
    String? bloodGroupValue;
   TextEditingController pint_Controller = TextEditingController();
@@ -39,7 +45,6 @@ class _Help_PostState extends State<Help_Post> {
     super.initState();
     notificationApi.initialiseNotifications();
     fetchDistricts();
-    fetchMunicipality();
   }
 
   void fetchDistricts() async {
@@ -51,11 +56,11 @@ class _Help_PostState extends State<Help_Post> {
     });
   }
 
-  void fetchMunicipality() async {
+  void fetchMunicipality(String district) async {
     final List<String> fetchedMunicipalities =
         await districtAndBankServices.getMunicipality(
       context: context,
-      districtName: "Lalitpur",
+      districtName: district ,
     );
     setState(() {
       municipalities = fetchedMunicipalities;
@@ -134,8 +139,11 @@ class _Help_PostState extends State<Help_Post> {
                   ),
                   onChanged: ((value) {
                     setState(() {
-                      selectedDistrict = value;
-                    });
+                            selectedDistrict = value;
+                            if (selectedDistrict.toString() != null) {
+                              fetchMunicipality(selectedDistrict.toString());
+                            }
+                          });
                   }),
                 ),
                 SizedBox(

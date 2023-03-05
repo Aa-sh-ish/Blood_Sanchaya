@@ -1,4 +1,3 @@
-import 'package:blood_sanchaya/services/districtandBank_Services.dart';
 import 'package:blood_sanchaya/services/helpPost_Services.dart';
 import 'package:blood_sanchaya/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +9,7 @@ class Event_and_Help extends StatefulWidget {
 
 class _Event_and_HelpState extends State<Event_and_Help> {
   List<dynamic> data = [];
+
   void initState() {
     super.initState();
     NotificationServices().getNotification(context: context).then((results) {
@@ -19,7 +19,19 @@ class _Event_and_HelpState extends State<Event_and_Help> {
     });
   }
 
-  @override
+  
+
+  void removeNotification(String id) {
+    setState(() {
+      data.removeWhere((item) => item['_id'] == id);
+    });
+  }
+
+    @override
+  void dispose() {
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
@@ -61,6 +73,8 @@ class _Event_and_HelpState extends State<Event_and_Help> {
                           bloodGroup: item['bloodGroup'].toString(),
                           ph_Number: item['phoneNumber'].toString(),
                           screenwidth: screenwidth,
+                          id: item["_id"],
+                          removenotification: removeNotification,
                         ),
                         SizedBox(
                           height: 20,
@@ -78,7 +92,7 @@ class _Event_and_HelpState extends State<Event_and_Help> {
   }
 }
 
-class Post extends StatelessWidget {
+class Post extends StatefulWidget {
   const Post({
     Key? key,
     required this.users,
@@ -87,6 +101,8 @@ class Post extends StatelessWidget {
     required this.bloodGroup,
     required this.ph_Number,
     required this.screenwidth,
+    required this.id,
+    required this.removenotification,
   }) : super(key: key);
 
   final String users;
@@ -95,6 +111,27 @@ class Post extends StatelessWidget {
   final String bloodGroup;
   final String ph_Number;
   final double screenwidth;
+  final String id;
+  final removenotification;
+
+  @override
+  State<Post> createState() => _PostState();
+}
+
+class _PostState extends State<Post> {
+  deleteNotification(String id) {
+    setState(() {
+      NotificationServices().deleteNotification(context, id);
+      if (mounted) {
+        widget.removenotification(id);
+      }
+    });
+  }
+
+  @override
+  void initstate() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,23 +150,29 @@ class Post extends StatelessWidget {
                 height: 20,
               ),
               Text(
-                "${users} from ${municipality} , ${district} needs ${bloodGroup}blood please contact ${users} in ${ph_Number} ThankYou!!",
+                "${widget.users} from ${widget.municipality} , ${widget.district} needs ${widget.bloodGroup}blood please contact ${widget.users} in ${widget.ph_Number} ThankYou!!",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Image.asset(
-                    "assets/Cancel.png",
-                    width: screenwidth * 0.3,
+                  GestureDetector(
+                    onTap: () async {
+                      await deleteNotification(widget.id);
+                      setState(() {});
+                    },
+                    child: Image.asset(
+                      "assets/Cancel.png",
+                      width: widget.screenwidth * 0.3,
+                    ),
                   ),
                   GestureDetector(
                     onTap: () {
-                      callNumber("${ph_Number}");
+                      callNumber("${widget.ph_Number}");
                     },
                     child: Image.asset(
                       "assets/Call.png",
-                      width: screenwidth * 0.3,
+                      width: widget.screenwidth * 0.3,
                     ),
                   ),
                 ],

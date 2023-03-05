@@ -396,18 +396,10 @@ class _HomePageState extends State<HomePage> {
                   height: height * 0.016,
                 ),
                 GestureDetector(
-                  onTap: (() {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Google_map(),
-                      ),
-                    );
-                  }),
                   child: Container(
                     color: Colors.red,
                     height: height * 0.38,
-                    child: Google_map(),
+                    child: Google_map(userId: user.id),
                   ),
                 ),
               ],

@@ -28,25 +28,27 @@ LocationRoute.post('/getUsers', async (req, res) => {
     // Get the bloodgroup, donatedate, latitude, and longitude parameters from the request body
     const { bloodGrouo, updatedate, lattitude, longitude } = req.body;
 
-    // Calculate the minimum and maximum latitude and longitude values based on the given range of 0.2
+
     const minLat = parseFloat(lattitude) - 0.2;
     const maxLat = parseFloat(lattitude) + 0.2;
     const minLong = parseFloat(longitude) - 0.2;
     const maxLong = parseFloat(longitude) + 0.2;
 
+console.log(minLat,typeof(minLat));
 
     const threeMonthsAgo = new Date(updatedate);
     threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+
     console.log(threeMonthsAgo);
 
     const users = await Location.find({
       bloodGrouo: bloodGrouo,
-      updatedate: { $lte: threeMonthsAgo.toString() },
+   //  updatedate: { $gte: threeMonthsAgo.toString() },
       lattitude: { $gte: minLat, $lte: maxLat },
       longitude: { $gte: minLong, $lte: maxLong }
     });
 
-    console.log(users.bloodGrouo);
+    console.log(bloodGrouo);
     res.json(users);
   } catch (err) {
     console.error(err);
@@ -55,55 +57,41 @@ LocationRoute.post('/getUsers', async (req, res) => {
 });
 
 
-// function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-//   const R = 6371; // Radius of the earth in km
-//   const dLat = deg2rad(lat2 - lat1); // deg2rad below
-//   const dLon = deg2rad(lon2 - lon1);
-//   const a =
-//     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-//     Math.cos(deg2rad(lat1)) *
-//       Math.cos(deg2rad(lat2)) *
-//       Math.sin(dLon / 2) *
-//       Math.sin(dLon / 2);
-//   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-//   const d = R * c; // Distance in km
-//   return d;
-// }
 
-// function deg2rad(deg) {
-//   return deg * (Math.PI / 180);
-// }
 
-// // Handler function for the API endpoint
-// async function getUsers(req, res) {
-//   const { userLat, userLong } = req.body; // Latitude and longitude of the user making the request
-//   const currentDate = new Date(); // Current date
 
-//   // Find all locations matching the criteria
-//   const locations = await Location.find({
-//     bloodGroup: req.body.bloodGroup,
-//     updatedate: { $lte: new Date(currentDate.getTime() - 90 * 24 * 60 * 60 * 1000) }, // Date 3 months ago
-//   });
+LocationRoute.post("/update", async (req, res) => {
+  try {
+    const { userId, userName, phone, bloodGroup, lattitude, longitude, updatedate } = req.body;
 
-//   // Filter locations within 50km of the user
-//   const nearbyLocations = locations.filter((location) => {
-//     const distance = getDistanceFromLatLonInKm(
-//       userLat,
-//       userLong,
-//       location.latitude,
-//       location.longitude
-//     );
-//     return distance <= 50;
-//   });
+    const updatedLocation = await Location.findOneAndUpdate(
+      { userId },
+      { userName, phone, bloodGroup, lattitude, longitude, updatedate },
+      { new: true }
+    );
 
-//   // Return the filtered locations
-//   res.json(nearbyLocations);
-// }
+    if (!updatedLocation) {
+      return res.status(404).send({ message: "Location not found" });
+    }
 
-//  // Assuming the handler function is in a separate file
-
-// // POST /users route
-// LocationRoute.post("/users", getUsers);
-
+    res.send(updatedLocation);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Internal server error" });
+  }
+});
+LocationRoute.post("/oneuserid",async(req,res,next)=>{
+  const userId =req.body;
+try{
+  data = await Location.findOne(userId);
+  if(!data){
+    res.status(200).json(1234);
+  }else{
+    res.status(400).json(567);
+  }
+}catch(e){
+  res.status(500).json({error:e.error});
+}
+}),
 
 module.exports= LocationRoute;

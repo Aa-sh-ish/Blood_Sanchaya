@@ -28,7 +28,18 @@ NotiRouter.get("/", async (req, res) => {
     }
   });
 
-
+  NotiRouter.post("/delete", async (req, res) => {
+    const { id } = req.body;
+    try {
+      const deletedNotification = await Notification.findByIdAndDelete(id);
+      if (!deletedNotification) {
+        return res.status(404).send({ error: "Notification not found" });
+      }
+      return res.status(200).send({ message: "Notification deleted successfully" });
+    } catch (error) {
+      return res.status(500).send({ error: "Internal server error" });
+    }
+  });
   
 
 module.exports= NotiRouter;
