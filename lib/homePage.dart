@@ -101,9 +101,6 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.red[300],
           title: Row(
             children: [
-              // SizedBox(
-              //   width: 0.01 * width,
-              // ),
               Image.asset(
                 "assets/Drop.png",
                 width: height * 0.03,
@@ -363,16 +360,14 @@ class _HomePageState extends State<HomePage> {
                       GestureDetector(
                         onTap: () {
                           if (selectedDistrict.toString() == null) {
-                            showSnackbar(context,
-                                "Select District ");
-                          } else if (selectedMunicipalities.toString() == null) {
-                            showSnackbar(context,
-                                "Select  Municipality");
-                          }else if(selectedBloodBankName.toString()==null)
-                          {
-                            showSnackbar(context,
-                                "Select BloodBank");
-                          }else{ Navigator.push(
+                            showSnackbar(context, "Select District ");
+                          } else if (selectedMunicipalities.toString() ==
+                              null) {
+                            showSnackbar(context, "Select  Municipality");
+                          } else if (selectedBloodBankName.toString() == null) {
+                            showSnackbar(context, "Select BloodBank");
+                          } else {
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => BB_details(
@@ -382,7 +377,8 @@ class _HomePageState extends State<HomePage> {
                                   bb_Name: selectedBloodBankName.toString(),
                                 ),
                               ),
-                            );}
+                            );
+                          }
                         },
                         child: Image.asset(
                           "assets/Search.png",

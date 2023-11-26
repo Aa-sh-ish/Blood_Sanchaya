@@ -7,7 +7,6 @@ const mongoose = require("mongoose").mongoose;
 const dotenv = require("dotenv");
 
 
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var autheRouter = require("./routes/autheRoute");

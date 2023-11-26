@@ -1,28 +1,40 @@
 import 'package:blood_sanchaya/services/bankNoti.dart';
+import 'package:blood_sanchaya/services/helpPost_Services.dart';
 import 'package:flutter/material.dart';
 
 class Bank_Notification extends StatefulWidget {
+  @override
   Bank_Notification({required this.bankName});
   String bankName;
-  @override
+
   State<Bank_Notification> createState() => _Bank_NotificationState();
 }
 
 class _Bank_NotificationState extends State<Bank_Notification> {
-
-
-
-@override
   List<dynamic> data = [];
+
   void initState() {
     super.initState();
     BankNotificationServices()
         .getBankNotification(context: context, bankName: widget.bankName)
         .then((result) {
       data = result;
+      setState(() {});
     });
   }
-@override
+
+  void removeNotification(String id) {
+    setState(() {
+      data.removeWhere((item) => item['_id'] == id);
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
@@ -61,11 +73,13 @@ class _Bank_NotificationState extends State<Bank_Notification> {
                           height: 20,
                         ),
                         Post(
-                            amount: item['amount'],
-                            users: item['name'],
-                            bloodGroup: item['bloodgroup'],
-                            ph_Number: item['Phone'],
-                            screenwidth: screenwidth),
+                          amount: item['amount'],
+                          users: item['name'],
+                          bloodGroup: item['bloodgroup'],
+                          ph_Number: item['Phone'],
+                          screenwidth: screenwidth,
+                         removenotification: removeNotification,
+                        ),
                         SizedBox(
                           height: 20,
                         )
@@ -84,28 +98,34 @@ class _Bank_NotificationState extends State<Bank_Notification> {
 
 class Post extends StatefulWidget {
   const Post({
-    Key? key,
     required this.amount,
     required this.users,
     required this.bloodGroup,
     required this.ph_Number,
-    required this.screenwidth,
-  }) : super(key: key);
+    required this.screenwidth, 
+    required this.removenotification,
+  });
   final String amount;
   final String users;
   final String bloodGroup;
   final String ph_Number;
   final double screenwidth;
+  final removenotification;
 
   @override
   State<Post> createState() => _PostState();
-
-
-
 }
 
 class _PostState extends State<Post> {
-  
+  deleteNotification(String id) {
+    setState(() {
+      NotificationServices().deleteNotification(context, id);
+      if (mounted) {
+        widget.removenotification(id);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -128,7 +148,8 @@ class _PostState extends State<Post> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               TextButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                  },
                   child: Text(
                     "Provided",
                     style: TextStyle(color: Colors.lightGreen),

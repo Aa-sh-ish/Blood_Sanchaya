@@ -268,8 +268,7 @@ class _BB_detailsState extends State<BB_details> {
                                                             bookBlood(
                                                             user.name,
                                                             " ${bloods[index]}",
-                                                            bloodBookController
-                                                                .text,
+                                                            bloodBookController.text,
                                                             user.phoneNumber);
                                                       }
                                                     },

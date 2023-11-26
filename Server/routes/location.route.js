@@ -59,7 +59,6 @@ console.log(minLat,typeof(minLat));
 
 
 
-
 LocationRoute.post("/update", async (req, res) => {
   try {
     const { userId, userName, phone, bloodGroup, lattitude, longitude, updatedate } = req.body;

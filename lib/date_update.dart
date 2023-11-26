@@ -32,7 +32,9 @@ class _Date_UpdateState extends State<Date_Update> {
       userId: Id,
       nextDonateDate: nextDate,
     );
-    setState(() {});
+    setState(() {
+      initState();
+    });
   }
 
   @override
@@ -173,8 +175,7 @@ class _Date_UpdateState extends State<Date_Update> {
                                                   _NewDate.toString());
                                               Navigator.pop(context);
                                               Navigator.pop(context);
-                                              setState(() {
-                                              });
+                                              setState(() {});
                                               // }
                                             },
                                             style: ElevatedButton.styleFrom(

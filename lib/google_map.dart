@@ -21,6 +21,12 @@ class _Google_mapState extends State<Google_map> {
   final List<String> bloods = [
     "A+",
     "A-",
+    "B+",
+    "B-",
+    "AB+",
+    "AB-",
+    "O+",
+    "O-"
   ];
   String? selectedBlood;
   DateTime today = DateTime.now();

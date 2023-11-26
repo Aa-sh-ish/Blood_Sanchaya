@@ -50,7 +50,6 @@ class _EventState extends State<Event> {
                   maxLines: 30,
                   decoration: InputDecoration(
                     filled: true,
-
                     fillColor: Colors.white70,
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(24.0),
